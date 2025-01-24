@@ -4,7 +4,7 @@ title:          "From Thinkers to Doers: Enhancing Task-Oriented Optimization wi
 selected:       true
 # pub:            "arXiv Preprint"
 # pub_pre:        "Submitted to "
-pub_post:       'Under Review.'
+pub_post:       '<strong>Under Review.<strong>'
 pub_date:       "2024"
 
 abstract: >-
