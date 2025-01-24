@@ -1,6 +1,6 @@
 ---
 title:          "From Thinkers to Doers: Enhancing Task-Oriented Optimization with Neural Agents in Visual Navigation"
-date:           2024-11
+date:           2024
 selected:       true
 # pub:            "arXiv Preprint"
 # pub_pre:        "Submitted to "
