@@ -4,7 +4,8 @@ date:           2023-09-21
 selected:       true
 pub:            "IEEE 2023 International Conference on Power System Technology (PowerCon)<br>"
 # pub_pre:        "Submitted to "
-pub_post:       '<strong>Published (*Oral Presentation).</strong>'
+pub_post:       '<strong>Published.</strong>'
+pub_last:       ' <span class="badge badge-pill badge-publication badge-success">Oral Presentation</span>'
 pub_date:       "2023"
 
 abstract: >-
