@@ -1,0 +1,46 @@
+primary_name: "Yiyuan Pan"
+navbar_name: "Yiyuan Pan"
+
+positions:
+- logo: /assets/images/badges/SJTU.png
+  name: B.Eng., Shanghai Jiao Tong University (2025)
+
+email: "ypan030406@gmail.com"
+# cv_link: link-to-your-cv-file
+gscholar: JgRZwOQAAAAJ
+github: PyyWill
+# twitter: your_twitter_id
+# orcid: 0000-0000-0000-0000
+
+short_bio: | 
+  Hi! I am Yiyuan Pan, a senior student at Shanghai Jiao Tong University, advised by <a href="https://irmv.sjtu.edu.cn/liuzhe">Prof. Zhe Liu</a> from the <a href="https://irmv.sjtu.edu.cn/cn">IRMV Lab</a> and <a href="https://automation.sjtu.edu.cn/wangzhaojian">Prof. Zhaojian Wang</a> from the <a href="http://www.scip.sjtu.edu.cn/">MOE Key Lab of System Control and Information Processing</a>. Previously, I worked as a research intern at Caltech's <a href="https://netlab.caltech.edu/">Netlab</a> under the supervision of <a href="https://www.ee.caltech.edu/people/slow">Prof. Steven Low</a>. <br>
+  My research is primarily centered on optimization and robotic learning. I aim to enhance robots' perception and interaction capabilities by fostering the development of human-like cognition🧠, with an emphasis on ensuring the versatility necessary for cross-embodiment collaboration🦾. <br> 
+  In my leisure time, I enjoy painting 🎨, playing guitar 🎸, and playing basketball 🏀. I am passionate about fostering open collaboration within the academic community, and I aspire to advance the development of robotics through knowledge sharing and cross-pollination. <br>
+
+
+# portrait_url: /assets/images/photos/portrait.jpg
+# portrait_caption: >-
+  # Photo taken in 2025.
+
+education:
+- name: Shanghai Jiao Tong University
+  logo: /assets/images/badges/SJTU.png
+  position: B.Eng. in Automation
+  date: Sep. 2021 - Jun. 2025
+
+experience:
+- name: California Institute of Technology
+  logo: /assets/images/badges/Caltech.png
+  position: Research Intern
+  date: Jun. 2024 - Dec. 2024
+
+
+awards:
+- name: Summer Undergraduate Research Fellowship (SURF), Caltech
+  date: 2024
+- name: First Prize of China Undergraduate Mathematical Contest (Shanghai Division)
+  date: 2022
+- name: First Prize of National University Students Intelligent Car Race (SJTU Division)
+  date: 2024
+- name: Honorable Mention of Rongchang Technology Innovation Scholarship
+  date: 2023
