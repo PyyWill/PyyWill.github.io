@@ -1,7 +1,7 @@
 ---
 title:          "Elevating Vision-and-Language Navigation with Viewpoint-Level Episodic Simulation and Memory"
 # date:           2025
-selected:       true
+selected:       false
 # pub:            "arXiv Preprint"
 # pub_pre:        "Submitted to "
 pub_post:       '<strong>Under Review.<strong>'
