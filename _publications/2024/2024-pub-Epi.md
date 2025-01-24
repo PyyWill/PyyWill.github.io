@@ -1,6 +1,6 @@
 ---
 title:          "Planning from Imagination: Episodic Simulation and Episodic Memory for Vision-and-Language Navigation"
-# date:           2024
+date:           2024-12-09
 selected:       true
 pub:            "The 39th Annual AAAI Conference on Artificial Intelligence (AAAI).<br>"
 # pub_pre:        "Submitted to "
