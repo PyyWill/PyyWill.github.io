@@ -1,6 +1,6 @@
 ---
 title:          "Co-Scheduling of Energy and Production in Discrete Manufacturing Industrial Parks Considering Decision-Dependent Uncertainties"
-date:           2024-10
+date:           2024
 selected:       true
 pub:            "arXiv Preprint"
 # pub_pre:        "Submitted to "
