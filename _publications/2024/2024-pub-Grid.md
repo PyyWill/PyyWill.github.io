@@ -1,6 +1,6 @@
 ---
 title:          "Uncertainty-Aware Capacity Expansion for Real-World DER Deployment via End-to-End Network Integration"
-date:           2024
+# date:           2024
 selected:       true
 pub:            "arXiv Preprint"
 # pub_pre:        "Submitted to "
