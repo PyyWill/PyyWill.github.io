@@ -12,7 +12,7 @@ abstract: >-
   This paper establishes a multi-stage robust optimization model for IES with both decision-independent uncertainties (DIUs) and decision-dependent uncertainties (DDUs).  Additionally, an improved column-and-constraint generation (C&CG) algorithm is proposed to solve the complicated scheduling problem with DDUs. 
 cover:          /assets/images/covers/cover_IES.png
 authors:
-  - '**Yiyuan Pan**'
+  - (<strong>Yiyuan Pan</strong>)
   - Jihang Wang
   - Jiabei He
   - Zhaojian Wang
