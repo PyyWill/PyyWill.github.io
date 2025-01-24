@@ -1,6 +1,6 @@
 ---
 title:          "FLAME:Learning to Navigate with Multimodal LLM in Urban Environments"
-# date:           2024
+date:           2024-12-09
 selected:       true
 pub:            "The 39th Annual AAAI Conference on Artificial Intelligence (AAAI).<br>"
 # pub_pre:        "Submitted to "
