@@ -4,7 +4,7 @@ title:          "Elevating Vision-and-Language Navigation with Viewpoint-Level E
 selected:       true
 # pub:            "arXiv Preprint"
 # pub_pre:        "Submitted to "
-pub_post:       'Under Review.'
+pub_post:       '<strong>Under Review.<strong>'
 pub_date:       "2025"
 
 abstract: >-
