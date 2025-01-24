@@ -9,12 +9,12 @@ pub_date:       "2024"
 
 abstract: >-
    Our approach implements a three-phase tuning technique for effective adaptation to navigation tasks, including single perception tuning for street view description, multiple perception tuning for route summarization, and end-to-end training on VLN datasets. This work showcases the potential of Multimodal LLMs (MLLMs) in complex navigation tasks, representing an advancement towards applications of MLLMs in the field of embodied intelligence.
-cover:          /assets/images/covers/cover_FLAME.png
+cover:          /assets/images/covers/cover_SALI.png
 authors:
-  - Yunzhe Xu
   - <strong>Yiyuan Pan</strong>
+  - Yunzhe Xu
   - Zhe Liu
   - Hesheng Wang
 links:
-  Paper: /assets/images/files/FLAME__Learning_to_Navigate_with_Multimodal_LLM_in_Urban_Environments.pdf
+  Paper: /assets/images/files/Planning_from_Imagination__Episodic_Simulation_and_Episodic_Memory_for_Vision_and_Language_Navigation.pdf
 ---
