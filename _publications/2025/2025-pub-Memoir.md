@@ -4,7 +4,7 @@ date:           2025-01-24
 selected:       false
 # pub:            "arXiv Preprint"
 # pub_pre:        "Submitted to "
-pub_post:       '<strong>Under Review.<strong>'
+pub_post:       '<strong>Under Review.</strong>'
 pub_date:       "2025"
 
 abstract: >-
