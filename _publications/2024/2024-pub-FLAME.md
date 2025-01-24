@@ -5,7 +5,6 @@ selected:       true
 pub:            "The 39th Annual AAAI Conference on Artificial Intelligence (AAAI)"
 # pub_pre:        "Submitted to "
 pub_post:       'Accepted (<strong>Oral Presentation</strong>).'
-pub_last:       ' <span class="badge badge-pill badge-publication badge-success">Power Pitch</span>'
 pub_date:       "2024"
 
 abstract: >-
