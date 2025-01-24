@@ -1,14 +1,14 @@
 ---
-title:          "FLAME:Learning to Navigate with Multimodal LLM in Urban Environments"
+title:          "Planning from Imagination: Episodic Simulation and Episodic Memory for Vision-and-Language Navigation"
 # date:           2024
 selected:       true
 pub:            "The 39th Annual AAAI Conference on Artificial Intelligence (AAAI).<br>"
 # pub_pre:        "Submitted to "
-pub_post:       '<strong>Accepted (Oral Presentation).<strong>'
+pub_post:       '<strong>Accepted.<strong>'
 pub_date:       "2024"
 
 abstract: >-
-   Our approach implements a three-phase tuning technique for effective adaptation to navigation tasks, including single perception tuning for street view description, multiple perception tuning for route summarization, and end-to-end training on VLN datasets. This work showcases the potential of Multimodal LLMs (MLLMs) in complex navigation tasks, representing an advancement towards applications of MLLMs in the field of embodied intelligence.
+   We propose a novel architecture that equips agents with a reality-imagination hybrid memory system. This system enables agents to maintain and expand their memory through both imaginative mechanisms and navigation actions. Additionally, we design tailored pre-training tasks to develop advanced imaginative capabilities.
 cover:          /assets/images/covers/cover_FLAME.png
 authors:
   - Yunzhe Xu
