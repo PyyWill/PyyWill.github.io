@@ -1,6 +1,6 @@
 ---
 title:          "Robust Scheduling of Integrated Energy Systems with Decision-Dependent Uncertainties"
-date:           2024
+# date:           2024
 selected:       true
 pub:            " IEEE 2023 International Conference on Power System Technology (PowerCon)"
 # pub_pre:        "Submitted to "
