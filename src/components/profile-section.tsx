@@ -6,6 +6,7 @@ import {
   Twitter,
   ArrowUpRight,
   GraduationCap,
+  MapPin,
 } from "lucide-react";
 import { AboutMe } from "@/data/aboutme";
 
@@ -151,6 +152,15 @@ export function ProfileSection({ aboutMe }: ProfileSectionProps) {
                 <Linkedin size={14} />
                 linkedin.com/in/{aboutMe.linkedinUsername}
               </a>
+            </>
+          )}
+          {aboutMe.location && (
+            <>
+              <br />
+              <div className="inline-flex items-center gap-2 text-sm text-zinc-600">
+                <MapPin size={14} />
+                {aboutMe.location}
+              </div>
             </>
           )}
         </div>

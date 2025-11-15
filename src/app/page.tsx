@@ -16,9 +16,9 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-[#FFFCF8]">
       {/* Don't have a great call on whether max-w-screen-xl is better */}
-      <div className="max-w-screen-lg mx-auto px-8 py-24">
+      <div className="max-w-screen-xl mx-auto px-8 py-24">
         {/* Grid Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-2">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-1">
           {/* Left Column - Fixed Info */}
           <div className="col-span-12 md:col-span-4 space-y-12 mb-8 md:mb-0">
             {/* Profile */}
@@ -28,12 +28,12 @@ export default function Home() {
           </div>
 
           {/* Right Column - Scrolling Content */}
-          <div className="col-span-12 md:col-span-7 md:col-start-6 space-y-24">
+          <div className="col-span-12 md:col-span-7 md:col-start-5 space-y-12">
             {/* About section is typically first */}
             {aboutMe.description && (
               <section>
-                <p
-                  className="font-serif text-sm leading-relaxed text-zinc-700 [&_a]:underline [&_a]:text-zinc-900 [&_a:hover]:text-zinc-600"
+                <div
+                  className="font-serif text-base leading-relaxed text-zinc-700 text-justify [&_a]:underline [&_a]:text-zinc-900 [&_a:hover]:text-zinc-600 [&_p]:mb-4 [&_p:last-child]:mb-0"
                   dangerouslySetInnerHTML={{ __html: aboutMe.description }}
                 />
               </section>
@@ -79,9 +79,26 @@ export default function Home() {
                   return (
                     publicationData.length > 0 && (
                       <section key={sectionName}>
-                        <h2 className="font-serif text-l mb-12 tracking-wide uppercase">
-                          Publications
+                        <h2 className="font-serif text-l mb-2 tracking-wide uppercase">
+                          Selected Publications
                         </h2>
+                        <p className="text-xs text-zinc-500 mb-12">
+                          Representative works are highlighted.{" "}
+                          {aboutMe.googleScholarUrl && (
+                            <>
+                              For a complete list, please see{" "}
+                              <a
+                                href={aboutMe.googleScholarUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="underline hover:text-zinc-700 transition-colors"
+                              >
+                                Google Scholar
+                              </a>
+                              .
+                            </>
+                          )}
+                        </p>
                         <div className="space-y-12">
                           {publicationData.map((publication, index) => (
                             <div key={index}>
