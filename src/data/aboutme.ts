@@ -16,7 +16,6 @@ export interface AboutMe {
   altName?: string;
   institutionUrl?: string;
   location?: string;
-  clustrMapsSiteId?: string; // ClustrMaps 访问统计站点 ID
 }
 
 export const aboutMe: AboutMe = {
@@ -34,7 +33,6 @@ export const aboutMe: AboutMe = {
   googleScholarUrl: "https://scholar.google.com/citations?user=JgRZwOQAAAAJ",
   githubUsername: "PyyWill",
   location: "Pittsburgh, PA",
-  clustrMapsSiteId: "wuBlhiVI3f9XcFVumFREQbzFU3WgcWCqwR-BRIOMJOI",
   // linkedinUsername: "yiyuan-pan-ab919a373", // https://www.linkedin.com/in/yiyuan-pan-ab919a373/
   // twitterUsername: "janesmith",
   // blogUrl: "https://",
