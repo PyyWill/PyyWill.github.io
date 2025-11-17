@@ -80,7 +80,7 @@ export function VisitorMap({ siteId, colors }: VisitorMapProps) {
 
   // 只在生产环境（非 localhost）加载 ClustrMaps JavaScript
   useEffect(() => {
-    if (!siteId || isLocalhost) return;
+    if (!siteId || isLocalhost || !widgetRef.current) return;
 
     // 检查是否已经加载过脚本
     if (document.getElementById("clustrmaps")) {
@@ -89,11 +89,29 @@ export function VisitorMap({ siteId, colors }: VisitorMapProps) {
 
     // ClustrMaps 访问统计地图脚本
     // 使用 ClustrMaps 标准方式：脚本 ID 必须是 "clustrmaps"
+    // 注意：根据 ClustrMaps 官方代码，参数顺序和格式必须完全匹配
     const script = document.createElement("script");
     script.type = "text/javascript";
     script.id = "clustrmaps";
-    script.src = `//cdn.clustrmaps.com/map_v2.js?cl=${mapColors.landColor}&w=a&t=tt&d=${siteId}&co=${mapColors.oceanColor}&cmo=${mapColors.pastVisitorsColor}&cmn=${mapColors.recentVisitorsColor}&ct=${mapColors.textColor}`;
+    // 构建脚本 URL，使用 ClustrMaps 官方格式
+    // 参数顺序：cl (land), w (width), t (type), d (site ID), co (ocean), cmo (past), cmn (recent), ct (text)
+    const scriptUrl = `//cdn.clustrmaps.com/map_v2.js?cl=${mapColors.landColor}&w=a&t=tt&d=${siteId}&co=${mapColors.oceanColor}&cmo=${mapColors.pastVisitorsColor}&cmn=${mapColors.recentVisitorsColor}&ct=${mapColors.textColor}`;
+    script.src = scriptUrl;
     script.async = true;
+
+    // 脚本加载成功后的处理
+    script.onload = () => {
+      // 隐藏静态图片，让 JavaScript 渲染的地图显示
+      const staticImg = document.getElementById("clustrmaps-static-img");
+      if (staticImg) {
+        staticImg.style.display = "none";
+      }
+    };
+
+    // 脚本加载失败的处理
+    script.onerror = () => {
+      console.error("ClustrMaps script failed to load");
+    };
 
     // 将脚本添加到 body 标签内（ClustrMaps 要求）
     document.body.appendChild(script);
@@ -148,25 +166,31 @@ export function VisitorMap({ siteId, colors }: VisitorMapProps) {
       )}
       <div
         ref={widgetRef}
+        id="clustrmaps-widget"
         className="flex items-center justify-center"
         style={{ minHeight: "100px" }}
       >
         {/* 在 localhost 只显示静态图片，在生产环境加载 JavaScript */}
         {siteId && (
-          <a
-            href={`https://clustrmaps.com/site/${siteId}`}
-            title="Visit tracker"
-            className="clustrmaps-link"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <img
-              src={`//www.clustrmaps.com/map_v2.png?cl=${mapColors.landColor}&w=a&t=tt&d=${siteId}&co=${mapColors.oceanColor}&cmo=${mapColors.pastVisitorsColor}&cmn=${mapColors.recentVisitorsColor}&ct=${mapColors.textColor}`}
-              alt="Visit tracker"
-              style={{ maxWidth: "100%", height: "auto" }}
-              loading="lazy"
-            />
-          </a>
+          <>
+            {/* 静态图片作为备用，JavaScript 加载后会替换 */}
+            <a
+              href={`https://clustrmaps.com/site/${encodeURIComponent(siteId)}`}
+              title="Visit tracker"
+              className="clustrmaps-link"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                src={`//www.clustrmaps.com/map_v2.png?cl=${mapColors.landColor}&w=a&t=tt&d=${encodeURIComponent(siteId)}&co=${mapColors.oceanColor}&cmo=${mapColors.pastVisitorsColor}&cmn=${mapColors.recentVisitorsColor}&ct=${mapColors.textColor}`}
+                alt="Visit tracker"
+                style={{ maxWidth: "100%", height: "auto" }}
+                loading="lazy"
+                id="clustrmaps-static-img"
+              />
+            </a>
+            {/* ClustrMaps 脚本会在这里自动渲染交互式地图 */}
+          </>
         )}
       </div>
       <p className="text-xs text-neutral-400 dark:text-neutral-600 mt-2">
