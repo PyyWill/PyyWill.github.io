@@ -13,24 +13,25 @@ interface VisitCounterProps {
 export function VisitCounter({ namespace }: VisitCounterProps) {
   const [count, setCount] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     // 使用 CountAPI 免费服务来统计访问次数
-    // 不需要注册，直接使用即可
+    // 如果 API 失败，使用 localStorage 作为备用方案
     const counterName = namespace || "pyywill-github-io";
-    
-    // 先获取当前值，然后增加计数
-    const getUrl = `https://api.countapi.xyz/get/${counterName}/visits`;
     const hitUrl = `https://api.countapi.xyz/hit/${counterName}/visits`;
 
-    // 先增加计数（hit），然后获取最新值
+    // 尝试使用 CountAPI
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 5000); // 5秒超时
+
     fetch(hitUrl, {
       method: "GET",
       mode: "cors",
       cache: "no-cache",
+      signal: controller.signal,
     })
       .then((response) => {
+        clearTimeout(timeoutId);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -40,19 +41,26 @@ export function VisitCounter({ namespace }: VisitCounterProps) {
         // CountAPI 返回格式: { value: number }
         if (data && typeof data.value === "number") {
           setCount(data.value);
-          setError(null);
-        } else {
-          console.warn("Unexpected API response:", data);
-          setError("Invalid response");
+          setLoading(false);
+          return;
         }
-        setLoading(false);
+        throw new Error("Invalid response format");
       })
       .catch((error) => {
-        console.error("Failed to fetch visit count:", error);
-        setError(error.message || "Failed to load");
+        clearTimeout(timeoutId);
+        // 如果 API 失败，使用 localStorage 作为备用
+        console.warn("CountAPI failed, using localStorage fallback:", error);
+        
+        const storageKey = `visit_count_${counterName}`;
+        const storedCount = localStorage.getItem(storageKey);
+        let localCount = storedCount ? parseInt(storedCount, 10) : 0;
+        
+        // 增加本地计数
+        localCount += 1;
+        localStorage.setItem(storageKey, localCount.toString());
+        
+        setCount(localCount);
         setLoading(false);
-        // 即使失败也显示一个默认值，让用户知道功能存在
-        setCount(0);
       });
   }, [namespace]);
 
@@ -62,17 +70,6 @@ export function VisitCounter({ namespace }: VisitCounterProps) {
       <div className="text-center mt-8 pt-8 border-t border-neutral-200 dark:border-neutral-800">
         <p className="text-xs text-neutral-400 dark:text-neutral-600">
           加载中...
-        </p>
-      </div>
-    );
-  }
-
-  // 如果出错，仍然显示计数器（显示错误或默认值）
-  if (error && count === null) {
-    return (
-      <div className="text-center mt-8 pt-8 border-t border-neutral-200 dark:border-neutral-800">
-        <p className="text-xs text-neutral-400 dark:text-neutral-600">
-          访问统计暂时不可用
         </p>
       </div>
     );
