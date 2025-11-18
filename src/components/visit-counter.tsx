@@ -15,13 +15,18 @@ export function VisitCounter({ namespace }: VisitCounterProps) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // 通过 Next.js API route 调用 CountAPI，避免 CORS 问题
-    // 这样可以实现真正的全局访问统计
+    // 直接调用 CountAPI（静态导出不支持 API routes）
+    // 先增加计数，然后获取最新值
+    const counterName = namespace || "pyywill-github-io";
+    const hitUrl = `https://api.countapi.xyz/hit/${counterName}/visits`;
+
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 10000); // 10秒超时
 
-    fetch("/api/visit-count", {
+    // 先增加计数（hit），这会返回增加后的值
+    fetch(hitUrl, {
       method: "GET",
+      mode: "cors",
       cache: "no-cache",
       signal: controller.signal,
     })
@@ -33,8 +38,9 @@ export function VisitCounter({ namespace }: VisitCounterProps) {
         return response.json();
       })
       .then((data) => {
-        if (data.success && typeof data.count === "number") {
-          setCount(data.count);
+        // CountAPI hit 端点返回格式: { value: number }
+        if (data && typeof data.value === "number") {
+          setCount(data.value);
           setLoading(false);
         } else {
           throw new Error("Invalid response format");
@@ -43,10 +49,31 @@ export function VisitCounter({ namespace }: VisitCounterProps) {
       .catch((error) => {
         clearTimeout(timeoutId);
         console.error("Failed to fetch visit count:", error);
-        // 如果 API 失败，显示错误但不使用 localStorage（因为需要全局统计）
-        setLoading(false);
-        // 可以选择显示一个提示，或者显示 0
-        setCount(null);
+        // 如果 hit 失败，尝试只获取当前值（不增加）
+        return fetch(`https://api.countapi.xyz/get/${counterName}/visits`, {
+          method: "GET",
+          mode: "cors",
+          cache: "no-cache",
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then((data) => {
+            if (data && typeof data.value === "number") {
+              setCount(data.value);
+              setLoading(false);
+            } else {
+              throw new Error("Invalid response format");
+            }
+          })
+          .catch((finalError) => {
+            console.error("Both hit and get failed:", finalError);
+            setLoading(false);
+            setCount(null);
+          });
       });
   }, [namespace]);
 
