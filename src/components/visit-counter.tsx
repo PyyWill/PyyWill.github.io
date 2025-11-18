@@ -19,14 +19,16 @@ export function VisitCounter({ namespace }: VisitCounterProps) {
     // 使用 CountAPI 免费服务来统计访问次数
     // 不需要注册，直接使用即可
     const counterName = namespace || "pyywill-github-io";
-    const apiUrl = `https://api.countapi.xyz/hit/${counterName}/visits`;
+    
+    // 先获取当前值，然后增加计数
+    const getUrl = `https://api.countapi.xyz/get/${counterName}/visits`;
+    const hitUrl = `https://api.countapi.xyz/hit/${counterName}/visits`;
 
-    // 获取当前访问次数
-    fetch(apiUrl, {
+    // 先增加计数（hit），然后获取最新值
+    fetch(hitUrl, {
       method: "GET",
-      headers: {
-        "Accept": "application/json",
-      },
+      mode: "cors",
+      cache: "no-cache",
     })
       .then((response) => {
         if (!response.ok) {
