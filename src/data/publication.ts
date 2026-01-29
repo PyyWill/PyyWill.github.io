@@ -106,7 +106,7 @@ export const publicationData: Publication[] = [
       "/images/seeing_arxiv.png",
     projectUrl: "https://m3-agent.github.io/",
     codeUrl: "https://github.com/bytedance-seed/m3-agent",
-    award: "⭐ 1.2k",
+    award: "⭐ 1.2k Stars",
     // if you have an image in public/images, you can use it like this:
     // imageUrl: "/images/publication-image.jpg"
   },
