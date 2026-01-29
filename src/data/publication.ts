@@ -94,8 +94,8 @@ export const publicationData: Publication[] = [
     // imageUrl: "/images/publication-image.jpg"
   },
   {
-    year: "2025",
-    conference: "ArXiv Preprint",
+    year: "2026",
+    conference: "ICLR",
     title: "Seeing, Listening, Remembering, and Reasoning: A Multimodal Agent with Long-Term Memory",
     authors: "Lin Long*, Yichen He*, Wentao Ye, Yiyuan Pan, Yuan Lin, Hang Li, Junbo Zhao, Wei Li",
     paperUrl: "https://arxiv.org/abs/2508.09736",
@@ -106,7 +106,7 @@ export const publicationData: Publication[] = [
       "/images/seeing_arxiv.png",
     projectUrl: "https://m3-agent.github.io/",
     codeUrl: "https://github.com/bytedance-seed/m3-agent",
-    // award: "🏆 Oral Presentation",
+    award: "⭐ 1.2k Stars",
     // if you have an image in public/images, you can use it like this:
     // imageUrl: "/images/publication-image.jpg"
   },
