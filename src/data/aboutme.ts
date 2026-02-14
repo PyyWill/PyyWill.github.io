@@ -25,8 +25,8 @@ export const aboutMe: AboutMe = {
   // Note that links work in the description
   description:
     "<p>I am a first-year MSR student at Carnegie Mellon University, advised by <a href=\"https://icontrol.ri.cmu.edu/people/changliu.html\" target=\"_blank\" rel=\"noopener noreferrer\">Prof. Changliu Liu</a>. Previously, I received my B.E. degree in Automation at Shanghai Jiao Tong University, advised by <a href=\"https://irmv.sjtu.edu.cn/liuzhe\" target=\"_blank\" rel=\"noopener noreferrer\">Prof. Zhe Liu</a> and <a href=\"https://irmv.sjtu.edu.cn/wanghesheng\" target=\"_blank\" rel=\"noopener noreferrer\">Prof. Hesheng Wang</a>.</p>" +
-    "<p><strong>Research Vision:</strong> My research focuses on <strong><em>Constraint-Grounded Learning</em></strong> for robotics planning, aiming to build a bridge between unstructured perception and verifiable decision-making. My work is structured around two key areas: <em>Constraint Acquisition</em>, the learning of formal, explainable rules from sensory data, and <em>Constraint Realization</em>, the synthesis of these rules into robust and verifiable policies.</p>" +
-    "<p><strong>Research Interests:</strong> Multimodal Learning, Task-and-Motion Planning.</p>",
+    "<p><strong>Research Vision:</strong> My research focuses on <strong><em>Constraint-Grounded Learning</em></strong> for neuro-symbolic planning, aiming to build a bridge between unstructured perception and verifiable decision-making. My work is structured around two key areas: <em>Constraint Acquisition</em>, the learning of formal, explainable rules from sensory data, and <em>Constraint Realization</em>, the synthesis of these rules into robust and verifiable policies.</p>" +
+    "<p><strong>Research Interests:</strong> Multimodal Learning, Neuro-Symbolic Learning.</p>",
   email: "yiyuanp@andrew.cmu.edu",
   imageUrl:
     "/images/photo.jpg",

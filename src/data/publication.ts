@@ -16,6 +16,18 @@ export interface Publication {
 export const publicationData: Publication[] = [
   // If you don't want to show publications, just make the array empty.
   {
+    year: "2026",
+    conference: "In Submission",
+    title:
+      "Emergent Neural Automaton Policies: Learning Symbolic Structure from Visuomotor Trajectories",
+    authors:
+      "Yiyuan Pan*, Xusheng Luo*, Hanjiang Hu, Peiqi Yu, Changliu Liu",
+    tldr:
+      "Introduce an emergent neuro-symbolic policy framework that infers an interpretable Mealy state machine from demonstrations and uses it to guide residual behavior cloning for precise continuous control.",
+    imageUrl:
+      "/images/enap_submission.jpg",
+  },
+  {
     year: "2025",
     conference: "NeurIPS",
     title: "Seeing through Uncertainty: Robust Task-Oriented Optimization in Visual Navigation",
