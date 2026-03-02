@@ -26,6 +26,7 @@ export const publicationData: Publication[] = [
       "Introduce an emergent neuro-symbolic policy framework that infers an interpretable Mealy state machine from demonstrations and uses it to guide residual behavior cloning for precise continuous control.",
     imageUrl:
       "/images/enap_submission.jpg",
+    isRepresentative: true,
   },
   {
     year: "2025",
