@@ -1,48 +1,57 @@
-/* Layout and styling adapted from pd-perry.github.io; entry lists follow toruowo.github.io. */
+/* Layout adapted from pd-perry.github.io. A paper-gray ground, charcoal ink and a warm gray ladder
+   between them; hairlines and whitespace instead of boxes and shadows. */
 :root {
   color-scheme: light;
-  --bg: #ffffff;
-  --text: #000000;
-  --text-muted: #525252;
-  --text-faint: #868686;
-  --accent: #c2571a;
-  --border: #e5e5e5;
-  --border-strong: #cfcfcf;
-  --sans: 'Geist', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  --mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
-  --radius: 2px;
+  /* Lightness carries hierarchy: the more important, the darker. */
+  --paper: #F0EFEB;
+  --ink: #1C1C1A;
+  --ink-2: #4A4944;    /* body copy, 7.8:1 on paper */
+  --muted: #6A6963;    /* secondary text, 4.8:1 */
+  --subtle: #8F8E88;   /* non-essential captions */
+  --faint: #C6C5BF;    /* underlines, outlines */
+  --grid: #DEDDD6;     /* hairlines */
+  --sans: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --ease: cubic-bezier(0.25, 1, 0.5, 1);  /* quartic out: fast in, fast stop, no bounce */
+  --pop: cubic-bezier(0.2, 0.7, 0.3, 1.3); /* small overshoot, for the doodles only */
   --max-width: 880px;
   --year-width: 96px;
 }
 
 * { box-sizing: border-box; }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: clip; }
 
 body {
+  position: relative;  /* containing block for the background doodles */
   margin: 0;
-  background: var(--bg);
-  color: var(--text);
+  background: var(--paper);
+  color: var(--ink);
   font-family: var(--sans);
-  line-height: 1.55;
   font-size: 15px;
-  letter-spacing: 0.003em;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
+::selection { background: var(--ink); color: var(--paper); }
+
+a:focus-visible { outline: 1px solid var(--ink); outline-offset: 3px; border-radius: 2px; }
+
 .wrap {
+  position: relative;
+  z-index: 1;  /* above the background doodles */
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 4rem 1.5rem 3rem;
+  padding: 7rem 1.5rem 4rem;
 }
 
 /* Hero */
 .hero {
   display: flex;
-  gap: 2.5rem;
+  gap: 3rem;
   align-items: flex-start;
   justify-content: space-between;
-  margin-bottom: 2.5rem;
+  margin-bottom: 5.5rem;
 }
 
 .hero-text {
@@ -51,81 +60,98 @@ body {
 }
 
 .hero-text h1 {
-  font-size: 42px;
-  font-weight: 500;
-  line-height: 1.1;
-  letter-spacing: -0.01em;
-  margin: 0 0 0.5rem;
+  font-size: 44px;
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  margin: 0 0 0.9rem;
 }
 
 .tagline {
-  margin: 0 0 1rem;
-  color: var(--text-muted);
-  font-size: 13px;
+  margin: 0 0 1.75rem;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
 .intro {
-  font-size: 15px;
-  line-height: 22px;
   max-width: 60ch;
-  margin: 0 0 1.25rem;
+  margin: 0 0 2rem;
+  color: var(--ink-2);
+  font-size: 15px;
+  line-height: 1.75;
   text-align: justify;
 }
 .intro a {
-  color: var(--accent);
-  text-decoration: none;
+  color: var(--ink);
   font-weight: 500;
+  text-decoration: underline;
+  text-decoration-color: var(--faint);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  transition: text-decoration-color 0.3s var(--ease);
 }
-.intro a:hover { text-decoration: underline; }
+.intro a:hover { text-decoration-color: var(--ink); }
 
 .links {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem 0.9rem;
+  gap: 0.6rem;
 }
+
+/* Capsule buttons that invert to ink on hover. */
+.links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 0 16px;
+  border: 1px solid var(--faint);
+  border-radius: 999px;
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background-color 0.3s var(--ease), border-color 0.3s var(--ease), color 0.3s var(--ease);
+}
+.links a:hover { background: var(--ink); border-color: var(--ink); color: var(--paper); }
 
 .hero-photo {
   flex: 0 0 auto;
 }
 
 .hero-photo img {
+  display: block;
   width: 220px;
   height: 220px;
   object-fit: cover;
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-  display: block;
+  border-radius: 20px;
+  background: var(--grid);
 }
-
-.links a {
-  display: inline-flex;
-  align-items: center;
-  min-height: 32px;
-  padding: 0 12px;
-  border: 1px solid var(--border);
-  border-right-width: 2px;
-  border-bottom-width: 2px;
-  border-radius: var(--radius);
-  color: var(--text);
-  text-decoration: none;
-  font-size: 13px;
-  font-weight: 500;
-}
-.links a:hover { color: var(--accent); border-color: var(--border-strong); }
 
 /* Sections */
-section { margin-bottom: 3rem; }
-
-h1, h2, h3 { font-weight: 500; }
+section { margin-bottom: 5rem; }
 
 h2 {
-  font-size: 24px;
-  line-height: 32px;
-  letter-spacing: -0.017em;
-  margin: 0 0 0.5rem;
-  padding-bottom: 0.75rem;
-  border-bottom: 1px solid var(--border-strong);
-  display: block;
+  position: relative;
+  margin: 0;
+  padding-bottom: 0.9rem;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+}
+/* Ink rule under each section title; drawn left to right when the section is revealed. */
+h2::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--ink);
+  transform-origin: left center;
 }
 
 p { margin: 0 0 1rem; }
@@ -133,24 +159,25 @@ p { margin: 0 0 1rem; }
 /* Education and publications: year column + details */
 .entry-list {
   display: grid;
-  gap: 18px;
-  padding-top: 1.25rem;
+  gap: 24px;
+  padding-top: 1.75rem;
 }
 
 .entry {
   display: grid;
   grid-template-columns: var(--year-width) minmax(0, 1fr);
   gap: 18px;
-  padding-bottom: 18px;
-  border-bottom: 1px solid var(--border);
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--grid);
 }
 .entry:last-child { padding-bottom: 0; border-bottom: 0; }
 
 .entry-year {
-  color: var(--text-muted);
-  font-size: 12px;
-  font-variant-numeric: tabular-nums;
   padding-top: 2px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
 }
 
 .entry-body {
@@ -159,44 +186,309 @@ p { margin: 0 0 1rem; }
 }
 
 .entry-body h3 {
-  margin: 0 0 3px;
+  margin: 0 0 6px;
   font-size: 15px;
-  line-height: 1.35;
   font-weight: 600;
-  letter-spacing: -0.003em;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
 }
-.entry-body h3 a { color: var(--text); text-decoration: none; }
-.entry-body h3 a:hover { color: var(--accent); }
+.entry-body h3 a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  transition: text-decoration-color 0.3s var(--ease);
+}
+.entry-body h3 a:hover { text-decoration-color: var(--ink); }
 
-.entry-meta { color: var(--text-muted); font-size: 13.5px; line-height: 1.5; }
+.entry-meta { color: var(--muted); font-size: 13.5px; line-height: 1.6; }
 .entry-meta + .entry-meta { margin-top: 2px; }
-.entry-meta strong { font-weight: 600; }
+.entry-meta strong { color: var(--ink); font-weight: 600; }
 
 .author-me {
   text-decoration: underline;
+  text-decoration-color: var(--faint);
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
 }
 
+/* Venue as a caption line, kept in each venue's own casing (NeurIPS, arXiv, CoRL, ...). */
+.entry-venue {
+  margin-top: 7px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+/* Experience: a horizontal timeline. Logos rest as ink silhouettes and develop into their own colors on hover. */
+.timeline {
+  --xp-gap: 24px;
+  --seg: 300ms;  /* time for the line to run from one dot to the next */
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--xp-gap);
+  margin: 0;
+  padding: 1.75rem 0 0;
+  list-style: none;
+}
+
+.xp { position: relative; }
+.xp:nth-child(2) { --i: 1; }  /* position on the timeline, for the entrance sequence */
+.xp:nth-child(3) { --i: 2; }
+.xp:nth-child(4) { --i: 3; }
+.xp:nth-child(5) { --i: 4; }
+
+.xp-logo {
+  display: flex;
+  align-items: flex-end;
+  height: 26px;
+}
+.xp-logo img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  filter: brightness(0);
+  opacity: 0.82;
+  transform-origin: left bottom;
+  transition: filter 0.5s var(--ease), opacity 0.5s var(--ease), transform 0.5s var(--ease);
+}
+/* Heights matched by cap height; the ByteDance box includes the y descender, so it drops to the shared baseline. */
+.xp-logo--caltech img { height: 18px; }
+.xp-logo--bytedance img { height: 23px; margin-bottom: -5px; }
+.xp-logo--penn img { height: 20px; }
+
+/* Rail: each item's dot plus the segment running on to the next one (dashed after the current one). */
+.xp-rail {
+  position: relative;
+  display: block;
+  height: 9px;
+  margin: 14px 0 12px;
+}
+.xp-rail::before {
+  content: "";
+  position: absolute;
+  top: 4px;
+  left: 0;
+  right: calc(-1 * var(--xp-gap));
+  border-top: 1px solid var(--faint);
+  transform-origin: left center;
+}
+.xp:last-child .xp-rail::before { right: 0; border-top-style: dashed; }
+.xp-rail::after {
+  content: "";
+  position: absolute;
+  top: 1px;
+  left: 0;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--subtle);
+  transition: transform 0.45s var(--pop), background-color 0.3s var(--ease);
+}
+.xp--now .xp-rail::after {  /* the current one: darkest, with a ring */
+  background: var(--ink);
+  box-shadow: 0 0 0 3px var(--paper), 0 0 0 4px var(--ink);
+}
+
+.xp-year {
+  display: block;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+.xp-title {
+  display: block;
+  margin: 4px 0 2px;
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  transition: text-decoration-color 0.3s var(--ease);
+}
+/* Stretched link: the whole item opens the lab's site, while the advisor link sits above it. */
+.xp-title::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+.xp-meta { display: block; color: var(--muted); font-size: 12.5px; line-height: 1.6; }
+.xp-meta a {
+  position: relative;
+  z-index: 1;             /* above the stretched lab link */
+  display: inline-block;  /* wraps as a unit on narrow screens: "Advisor:" / "Prof. Steven Low" */
+  max-width: 100%;
+}
+
+/* Advisor links (education and experience): a quiet underline that darkens on hover. */
+:is(.entry-meta, .xp-meta) a {
+  color: var(--ink-2);
+  text-decoration: underline;
+  text-decoration-color: var(--faint);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color 0.3s var(--ease), text-decoration-color 0.3s var(--ease);
+}
+:is(.entry-meta, .xp-meta) a:hover { color: var(--ink); text-decoration-color: var(--ink); }
+
+/* Hover or keyboard focus anywhere on the item: the logo grows a touch and develops into its own colors.
+   The lab title underlines too, unless the pointer is on the advisor link (so it is clear which link you'd follow). */
+.xp:is(:hover, :focus-within) .xp-logo img { filter: brightness(1); opacity: 1; transform: scale(1.06); }
+.xp:is(:hover, :focus-within) .xp-rail::after { transform: scale(1.4); background-color: var(--ink); }
+.xp:is(:hover, :focus-within):not(:has(.xp-meta a:is(:hover, :focus-visible))) .xp-title { text-decoration-color: var(--ink); }
+
+/* Doodles (decorative). A faint field of margin drawings behind the page, one skater on the publications rule,
+   and a sticker on the footer rule. The tilts and offsets are deliberate: loose, never lined up. */
+.doodle-field {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.doodle-field img {
+  position: absolute;
+  top: var(--top);
+  left: calc(50% + var(--x));
+  width: var(--w);
+  height: auto;
+  opacity: var(--o, 0.055);
+  transform: rotate(var(--r, 0deg));
+  user-select: none;
+}
+
+.doodle {
+  display: block;
+  width: auto;
+  pointer-events: none;
+  user-select: none;
+}
+
+h2:has(> .doodle) { padding-right: 88px; }  /* long titles wrap before they reach the skater */
+
+/* The skater, caught mid-ollie off the end of the rule. */
+.doodle--skater {
+  --ollie: translate(14px, -14px) rotate(-14deg);
+  position: absolute;
+  right: 0;
+  bottom: 1px;
+  height: 54px;
+  transform-origin: 0 100%;  /* pivot on the tail */
+  transform: var(--ollie);
+}
+
+/* A sticker slapped across the footer rule; its paper-colored patch hides the rule behind it. */
+.doodle--sticker {
+  position: absolute;
+  top: -26px;
+  right: 20%;  /* slapped just past the credits, not squared to the edge */
+  height: 46px;
+  transform: rotate(-12deg);
+}
+
 /* Footer */
 footer {
-  border-top: 1px solid var(--border);
-  padding-top: 1.25rem;
-  font-family: var(--mono);
-  font-size: 12px;
-  color: var(--text-faint);
+  position: relative;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--grid);
+  color: var(--subtle);
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
-footer a { color: inherit; text-underline-offset: 3px; }
-footer a:hover { color: var(--accent); }
+footer p { margin: 0; }
+footer a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--faint);
+  text-underline-offset: 3px;
+  transition: color 0.3s var(--ease), text-decoration-color 0.3s var(--ease);
+}
+footer a:hover { color: var(--ink); text-decoration-color: var(--ink); }
+footer .credit-own { color: var(--muted); }  /* the doodles are the one part not adapted from anyone */
+
+/* Motion: each block rises in once as it enters the viewport, 90ms apart (the inline script sets .in and --delay).
+   Screen only (printing shows everything), with JS support (.js), and only if the reader allows motion. */
+@media screen and (prefers-reduced-motion: no-preference) {
+  .js :is(.hero-text > *, .hero-photo, h2, .entry, footer) {
+    transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+    transition-delay: var(--delay, 0ms);
+  }
+  .js :is(.hero-text > *, .hero-photo, h2, .entry, footer):not(.in) {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  .js h2::after { transition: transform 1.2s var(--ease) var(--delay, 0ms); }
+  .js h2:not(.in)::after { transform: scaleX(0); }
+
+  /* Timeline: one line runs through at a steady pace, one segment per --seg; each experience appears
+     (and its dot pops) only when the line reaches it. The line itself is never faded, only drawn.
+     The pop is an animation with backwards fill only, so it never overrides the hover transition afterwards. */
+  .js .timeline .xp > :not(.xp-rail) {
+    transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
+    transition-delay: calc(var(--delay, 0ms) + var(--i, 0) * var(--seg));
+  }
+  .js .timeline:not(.in) .xp > :not(.xp-rail) { opacity: 0; transform: translateY(8px); }
+  .js .timeline .xp-rail::before { transition: transform var(--seg) linear calc(var(--delay, 0ms) + var(--i, 0) * var(--seg)); }
+  .js .timeline:not(.in) .xp-rail::before { transform: scaleX(0); }
+  .js .timeline:not(.in) .xp-rail::after { transform: scale(0); }
+  .js .timeline.in .xp-rail::after { animation: dot-pop 0.4s var(--pop) calc(var(--delay, 0ms) + var(--i, 0) * var(--seg)) backwards; }
+
+  /* The skater rides in along the rule while it is drawn, then pops an ollie off its end. */
+  .js h2:not(.in) > .doodle--skater { opacity: 0; }
+  .js h2.in > .doodle--skater { animation: ride-ollie 1.7s calc(var(--delay, 0ms) + 250ms) both; }
+}
+
+@keyframes dot-pop {
+  from { transform: scale(0); }
+  to { transform: scale(1); }
+}
+
+@keyframes ride-ollie {
+  0% { opacity: 0; transform: translate(var(--ride, -160px), 0) rotate(0deg); animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1); }
+  15% { opacity: 1; }
+  70% { transform: translate(0, 0) rotate(0deg); animation-timing-function: cubic-bezier(0.2, 0.7, 0.3, 1.3); }
+  100% { opacity: 1; transform: var(--ollie); }
+}
 
 /* Responsive */
 @media (max-width: 640px) {
-  .hero { flex-direction: column-reverse; align-items: flex-start; text-align: left; }
-  .hero-photo img { width: 140px; height: 140px; }
+  .wrap { padding-top: 4rem; }
+  .hero { flex-direction: column-reverse; align-items: flex-start; gap: 2rem; margin-bottom: 4rem; }
+  .hero-text h1 { font-size: 36px; }
+  .hero-photo img { width: 140px; height: 140px; border-radius: 16px; }
+  section { margin-bottom: 4rem; }
+  .doodle--skater { --ride: -40px; --ollie: translate(2px, -12px) rotate(-12deg); }  /* short roll-in, no overhang */
+  .doodle-field img {
+    top: var(--top-sm, var(--top));
+    left: calc(50% + var(--x-sm, var(--x)));
+    width: var(--w-sm, var(--w));
+    opacity: calc(var(--o, 0.055) * 0.75);  /* fainter where it sits behind text */
+  }
+  .doodle-field .sm-hide { display: none; }
   /* Justified text in a narrow column needs hyphenation to avoid wide gaps; author names stay unbroken. */
   .intro, .entry-body h3 { hyphens: auto; }
 }
 
 @media (max-width: 560px) {
-  .entry { grid-template-columns: 1fr; gap: 5px; }
+  .entry { grid-template-columns: 1fr; gap: 6px; }
+  .timeline { --xp-gap: 14px; }
+  .xp-logo { height: 20px; }
+  .xp-logo--caltech img { height: 13px; }
+  .xp-logo--bytedance img { height: 16.5px; margin-bottom: -3.5px; }
+  .xp-logo--penn img { height: 14px; }
+  .xp-title { font-size: 12.5px; }
+  .xp-meta { font-size: 11.5px; }
+}
+
+@media print {
+  .doodle-field { display: none; }
 }

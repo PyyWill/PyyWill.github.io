@@ -2,13 +2,13 @@
 
 Personal academic homepage of Yiyuan Pan: https://pyywill.github.io
 
-A plain static site with no build step. Layout adapted from [Perry Dong's homepage](https://pd-perry.github.io); the education and publication lists follow [Toru Lin's homepage](https://toruowo.github.io).
+A plain static site with no build step. Layout adapted from [Perry Dong's homepage](https://pd-perry.github.io); the doodles are hand-drawn by me.
 
 ## Files
 
-- `index.html`: all content (bio, links, education, publications)
+- `index.html`: all content (bio, links, education, publications) and a small inline reveal-on-scroll script
 - `style.css`: styles
-- `assets/`: profile photo and favicon
+- `assets/`: profile photo, favicon, hand-drawn doodles (`assets/doodles/`), and experience logos (`assets/logos/`)
 
 ## Local preview
 

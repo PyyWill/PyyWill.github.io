@@ -5,20 +5,49 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Yiyuan Pan</title>
 <meta name="description" content="Personal academic homepage of Yiyuan Pan.">
+<meta name="theme-color" content="#F0EFEB">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<script>
+  // Reveal on scroll: flag JS support before first paint (so content stays visible without JS),
+  // then fade each block in once as it enters the viewport, staggered 90ms apart.
+  if ('IntersectionObserver' in window) {
+    document.documentElement.classList.add('js');
+    addEventListener('DOMContentLoaded', () => {
+      const io = new IntersectionObserver((entries) => {
+        let n = 0;
+        for (const e of entries) {
+          if (!e.isIntersecting) continue;
+          e.target.style.setProperty('--delay', Math.min(n++, 8) * 90 + 'ms');
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      }, { threshold: 0.2 });
+      document.querySelectorAll('.hero-text > *, .hero-photo, h2, .entry, .timeline, footer').forEach((el) => io.observe(el));
+    });
+  }
+</script>
 </head>
 <body>
+
+<!-- Background doodles: faint, tilted, bleeding off the page edges. Per doodle: --top (from the page top),
+     --x (offset from the page center), --w (width), --r (rotation), --o (opacity); the -sm values apply on phones. -->
+<div class="doodle-field" aria-hidden="true">
+  <img src="assets/doodles/head.svg" alt="" class="sm-hide" style="--top: 330px; --x: 420px; --w: 300px; --r: 9deg">
+  <img src="assets/doodles/leap.svg" alt="" class="sm-hide" loading="lazy" style="--top: 32%; --x: -735px; --w: 290px; --r: 7deg">
+  <img src="assets/doodles/profile.svg" alt="" loading="lazy" style="--top: 54%; --x: -700px; --w: 220px; --r: -12deg; --x-sm: -255px; --w-sm: 190px; --top-sm: 55%">
+  <img src="assets/doodles/celebrate.svg" alt="" loading="lazy" style="--top: 83%; --x: 455px; --w: 170px; --r: 10deg; --o: .065; --x-sm: 115px; --w-sm: 130px; --top-sm: 86%">
+</div>
 
 <div class="wrap">
 
   <header class="hero">
     <div class="hero-text">
       <h1>Yiyuan Pan</h1>
-      <p class="tagline">M.S. in Robotics, Carnegie Mellon University</p>
+      <p class="tagline">M.S. in Robotics · Carnegie Mellon University</p>
       <p class="intro">
         I am a second-year MSR student at Carnegie Mellon University, advised by
         <a href="https://icontrol.ri.cmu.edu/people/changliu.html" target="_blank" rel="noopener noreferrer">Changliu Liu</a>. I also work with
@@ -48,7 +77,7 @@
           <div class="entry-body">
             <h3>Carnegie Mellon University</h3>
             <div class="entry-meta">M.S. in Robotics</div>
-            <div class="entry-meta">Advisor: Prof. Changliu Liu</div>
+            <div class="entry-meta">Advisor: <a href="https://icontrol.ri.cmu.edu/people/changliu.html" target="_blank" rel="noopener noreferrer">Prof. Changliu Liu</a></div>
           </div>
         </article>
 
@@ -57,68 +86,49 @@
           <div class="entry-body">
             <h3>Shanghai Jiao Tong University</h3>
             <div class="entry-meta">B.S. in Automation</div>
-            <div class="entry-meta">Advisor: Prof. Zhe Liu, Prof. Hesheng Wang</div>
+            <div class="entry-meta">Advisor: <a href="https://irmv.sjtu.edu.cn/liuzhe" target="_blank" rel="noopener noreferrer">Prof. Zhe Liu</a>, <a href="https://irmv.sjtu.edu.cn/wanghesheng" target="_blank" rel="noopener noreferrer">Prof. Hesheng Wang</a></div>
           </div>
         </article>
 
       </div>
     </section>
 
-    <section id="publications">
-      <h2>Selected Publications</h2>
-      <div class="entry-list">
+    <section id="experience">
+      <h2>Experience</h2>
+      <ol class="timeline">
+        <li class="xp">
+          <span class="xp-logo xp-logo--caltech"><img src="assets/logos/caltech.svg" alt=""></span>
+          <span class="xp-rail" aria-hidden="true"></span>
+          <span class="xp-year">2024</span>
+          <a class="xp-title" href="https://netlab.caltech.edu/" target="_blank" rel="noopener noreferrer">Caltech · Netlab</a>
+          <span class="xp-meta">Advisor: <a href="https://www.cms.caltech.edu/people/slow" target="_blank" rel="noopener noreferrer">Prof. Steven Low</a></span>
+        </li>
+        <li class="xp">
+          <span class="xp-logo xp-logo--bytedance"><img src="assets/logos/bytedance.svg" alt=""></span>
+          <span class="xp-rail" aria-hidden="true"></span>
+          <span class="xp-year">2025</span>
+          <a class="xp-title" href="https://seed.bytedance.com/en/" target="_blank" rel="noopener noreferrer">ByteDance Seed</a>
+          <span class="xp-meta">Advisor: <a href="https://hangli-hl.github.io/" target="_blank" rel="noopener noreferrer">Dr. Hang Li</a></span>
+        </li>
+        <li class="xp xp--now">
+          <span class="xp-logo xp-logo--penn"><img src="assets/logos/penn.svg" alt=""></span>
+          <span class="xp-rail" aria-hidden="true"></span>
+          <span class="xp-year">2026</span>
+          <a class="xp-title" href="https://thelabone.org/" target="_blank" rel="noopener noreferrer">UPenn · LabOne</a>
+          <span class="xp-meta">Advisor: <a href="https://jiayuanm.com/" target="_blank" rel="noopener noreferrer">Prof. Jiayuan Mao</a></span>
+        </li>
+      </ol>
+    </section>
 
+    <section id="publications">
+      <h2>Selected Publications<img class="doodle doodle--skater" src="assets/doodles/skater.svg" alt="" width="64" height="54" loading="lazy" decoding="async"></h2>
+      <div class="entry-list">
         <article class="entry">
           <div class="entry-year">2026</div>
           <div class="entry-body">
             <h3><a href="https://arxiv.org/abs/2606.26588" target="_blank" rel="noopener noreferrer">Inference-Time Robot Behavior Steering through Physically-Aware Reconfiguration of Task-Structure</a></h3>
             <div class="entry-meta"><strong><span class="author-me">Yiyuan Pan</span></strong>, Hanjiang Hu, Shangtao Li, Xusheng Luo, and Changliu Liu.</div>
-            <div class="entry-meta">CoRL 2026.</div>
-          </div>
-        </article>
-
-        <article class="entry">
-          <div class="entry-year">2026</div>
-          <div class="entry-body">
-            <h3><a href="https://arxiv.org/abs/2603.22703" target="_blank" rel="noopener noreferrer">Learning Safe-Stoppability Monitors for Humanoid Robots</a></h3>
-            <div class="entry-meta">Yifan Sun, <strong><span class="author-me">Yiyuan Pan</span></strong>, Shangtao Li, Caiwu Ding, Tao Cui, Lingyun Wang, and Changliu Liu.</div>
-            <div class="entry-meta">IROS 2026.</div>
-          </div>
-        </article>
-
-        <article class="entry">
-          <div class="entry-year">2026</div>
-          <div class="entry-body">
-            <h3><a href="https://arxiv.org/abs/2603.25903" target="_blank" rel="noopener noreferrer">Emergent Neural Automaton Policies: Learning Symbolic Structure from Visuomotor Trajectories</a></h3>
-            <div class="entry-meta"><strong><span class="author-me">Yiyuan Pan</span>*</strong>, Xusheng Luo*, Hanjiang Hu, Peiqi Yu, and Changliu Liu.</div>
-            <div class="entry-meta">RSS 2026.</div>
-          </div>
-        </article>
-
-        <article class="entry">
-          <div class="entry-year">2026</div>
-          <div class="entry-body">
-            <h3><a href="https://arxiv.org/abs/2606.03954" target="_blank" rel="noopener noreferrer">VLESA: Vision-Language Embodied Safety Agent for Human Activity Monitoring</a></h3>
-            <div class="entry-meta">Hanjiang Hu*, <strong><span class="author-me">Yiyuan Pan</span>*</strong>, Jiaxing Li, Xusheng Luo, Alexander Robey, Na Li, Yebin Wang, and Changliu Liu.</div>
-            <div class="entry-meta">arXiv 2026.</div>
-          </div>
-        </article>
-
-        <article class="entry">
-          <div class="entry-year">2026</div>
-          <div class="entry-body">
-            <h3><a href="https://proceedings.iclr.cc/paper_files/paper/2026/hash/ec370e882e8a02be955679ddbd2731b8-Abstract-Conference.html" target="_blank" rel="noopener noreferrer">Seeing, Listening, Remembering, and Reasoning: A Multimodal Agent with Long-Term Memory</a></h3>
-            <div class="entry-meta">Lin Long*, Yichen He*, Wentao Ye, <strong><span class="author-me">Yiyuan Pan</span></strong>, Yuan Lin, Hang Li, Junbo Zhao, and Wei Li.</div>
-            <div class="entry-meta">ICLR 2026.</div>
-          </div>
-        </article>
-
-        <article class="entry">
-          <div class="entry-year">2026</div>
-          <div class="entry-body">
-            <h3><a href="https://ieeexplore.ieee.org/abstract/document/11459135/" target="_blank" rel="noopener noreferrer">Dream to Recall: Imagination-Guided Experience Retrieval for Memory-Persistent Vision-and-Language Navigation</a></h3>
-            <div class="entry-meta">Yunzhe Xu, <strong><span class="author-me">Yiyuan Pan</span></strong>, and Zhe Liu.</div>
-            <div class="entry-meta">IEEE TPAMI 2026.</div>
+            <div class="entry-venue">CoRL 2026</div>
           </div>
         </article>
 
@@ -127,7 +137,7 @@
           <div class="entry-body">
             <h3><a href="https://proceedings.neurips.cc/paper_files/paper/2025/hash/23bff092672192694aa05ff412e997d9-Abstract-Conference.html" target="_blank" rel="noopener noreferrer">Seeing through Uncertainty: Robust Task-Oriented Optimization in Visual Navigation</a></h3>
             <div class="entry-meta"><strong><span class="author-me">Yiyuan Pan</span></strong>, Yunzhe Xu, Zhe Liu, and Hesheng Wang.</div>
-            <div class="entry-meta">NeurIPS 2025.</div>
+            <div class="entry-venue">NeurIPS 2025</div>
           </div>
         </article>
 
@@ -136,7 +146,7 @@
           <div class="entry-body">
             <h3><a href="https://proceedings.neurips.cc/paper_files/paper/2025/hash/a86f9983dee679f0d81ab712a8f7e17c-Abstract-Conference.html" target="_blank" rel="noopener noreferrer">Wonder Wins Ways: Curiosity-Driven Exploration through Multi-Agent Contextual Calibration</a></h3>
             <div class="entry-meta"><strong><span class="author-me">Yiyuan Pan</span></strong>, Zhe Liu, and Hesheng Wang.</div>
-            <div class="entry-meta">NeurIPS 2025.</div>
+            <div class="entry-venue">NeurIPS 2025</div>
           </div>
         </article>
 
@@ -145,16 +155,7 @@
           <div class="entry-body">
             <h3><a href="https://ojs.aaai.org/index.php/AAAI/article/view/32679" target="_blank" rel="noopener noreferrer">Planning from Imagination: Episodic Simulation and Episodic Memory for Vision-and-Language Navigation</a></h3>
             <div class="entry-meta"><strong><span class="author-me">Yiyuan Pan</span></strong>, Yunzhe Xu, Zhe Liu, and Hesheng Wang.</div>
-            <div class="entry-meta">AAAI 2025 (Oral).</div>
-          </div>
-        </article>
-
-        <article class="entry">
-          <div class="entry-year">2025</div>
-          <div class="entry-body">
-            <h3><a href="https://ojs.aaai.org/index.php/AAAI/article/view/32974" target="_blank" rel="noopener noreferrer">FLAME: Learning to Navigate with Multimodal LLM in Urban Environments</a></h3>
-            <div class="entry-meta">Yunzhe Xu, <strong><span class="author-me">Yiyuan Pan</span></strong>, Zhe Liu, and Hesheng Wang.</div>
-            <div class="entry-meta">AAAI 2025 (Oral).</div>
+            <div class="entry-venue">AAAI 2025 · Oral</div>
           </div>
         </article>
 
@@ -163,7 +164,61 @@
           <div class="entry-body">
             <h3><a href="https://ieeexplore.ieee.org/abstract/document/10330971/" target="_blank" rel="noopener noreferrer">Robust Scheduling of Integrated Energy Systems with Decision-Dependent Uncertainties</a></h3>
             <div class="entry-meta"><strong><span class="author-me">Yiyuan Pan</span></strong>, Jihang Wang, Jiabei He, and Zhaojian Wang.</div>
-            <div class="entry-meta">IEEE PowerCon 2023.</div>
+            <div class="entry-venue">IEEE PowerCon 2023</div>
+          </div>
+        </article>
+
+        <article class="entry">
+          <div class="entry-year">2026</div>
+          <div class="entry-body">
+            <h3><a href="https://arxiv.org/abs/2603.25903" target="_blank" rel="noopener noreferrer">Emergent Neural Automaton Policies: Learning Symbolic Structure from Visuomotor Trajectories</a></h3>
+            <div class="entry-meta"><strong><span class="author-me">Yiyuan Pan</span>*</strong>, Xusheng Luo*, Hanjiang Hu, Peiqi Yu, and Changliu Liu.</div>
+            <div class="entry-venue">RSS 2026</div>
+          </div>
+        </article>
+
+        <article class="entry">
+          <div class="entry-year">2026</div>
+          <div class="entry-body">
+            <h3><a href="https://arxiv.org/abs/2606.03954" target="_blank" rel="noopener noreferrer">VLESA: Vision-Language Embodied Safety Agent for Human Activity Monitoring</a></h3>
+            <div class="entry-meta">Hanjiang Hu*, <strong><span class="author-me">Yiyuan Pan</span>*</strong>, Jiaxing Li, Xusheng Luo, Alexander Robey, Na Li, Yebin Wang, and Changliu Liu.</div>
+            <div class="entry-venue">arXiv 2026</div>
+          </div>
+        </article>
+
+        <article class="entry">
+          <div class="entry-year">2026</div>
+          <div class="entry-body">
+            <h3><a href="https://arxiv.org/abs/2603.22703" target="_blank" rel="noopener noreferrer">Learning Safe-Stoppability Monitors for Humanoid Robots</a></h3>
+            <div class="entry-meta">Yifan Sun, <strong><span class="author-me">Yiyuan Pan</span></strong>, Shangtao Li, Caiwu Ding, Tao Cui, Lingyun Wang, and Changliu Liu.</div>
+            <div class="entry-venue">IROS 2026</div>
+          </div>
+        </article>
+
+        <article class="entry">
+          <div class="entry-year">2026</div>
+          <div class="entry-body">
+            <h3><a href="https://ieeexplore.ieee.org/abstract/document/11459135/" target="_blank" rel="noopener noreferrer">Dream to Recall: Imagination-Guided Experience Retrieval for Memory-Persistent Vision-and-Language Navigation</a></h3>
+            <div class="entry-meta">Yunzhe Xu, <strong><span class="author-me">Yiyuan Pan</span></strong>, and Zhe Liu.</div>
+            <div class="entry-venue">IEEE TPAMI 2026</div>
+          </div>
+        </article>
+
+        <article class="entry">
+          <div class="entry-year">2025</div>
+          <div class="entry-body">
+            <h3><a href="https://ojs.aaai.org/index.php/AAAI/article/view/32974" target="_blank" rel="noopener noreferrer">FLAME: Learning to Navigate with Multimodal LLM in Urban Environments</a></h3>
+            <div class="entry-meta">Yunzhe Xu, <strong><span class="author-me">Yiyuan Pan</span></strong>, Zhe Liu, and Hesheng Wang.</div>
+            <div class="entry-venue">AAAI 2025 · Oral</div>
+          </div>
+        </article>
+
+        <article class="entry">
+          <div class="entry-year">2026</div>
+          <div class="entry-body">
+            <h3><a href="https://proceedings.iclr.cc/paper_files/paper/2026/hash/ec370e882e8a02be955679ddbd2731b8-Abstract-Conference.html" target="_blank" rel="noopener noreferrer">Seeing, Listening, Remembering, and Reasoning: A Multimodal Agent with Long-Term Memory</a></h3>
+            <div class="entry-meta">Lin Long*, Yichen He*, Wentao Ye, <strong><span class="author-me">Yiyuan Pan</span></strong>, Yuan Lin, Hang Li, Junbo Zhao, and Wei Li.</div>
+            <div class="entry-venue">ICLR 2026</div>
           </div>
         </article>
 
@@ -173,7 +228,8 @@
   </main>
 
   <footer>
-    <p>© 2026 Yiyuan Pan. Design adapted from <a href="https://pd-perry.github.io" target="_blank" rel="noopener noreferrer">Perry Dong</a> and <a href="https://toruowo.github.io" target="_blank" rel="noopener noreferrer">Toru Lin</a>.</p>
+    <p>© 2026 Yiyuan Pan · <span class="credit-own">Doodles hand-drawn by me</span> · Layout adapted from <a href="https://pd-perry.github.io" target="_blank" rel="noopener noreferrer">Perry Dong</a></p>
+    <img class="doodle doodle--sticker" src="assets/doodles/sticker.svg" alt="" width="44" height="46" loading="lazy" decoding="async">
   </footer>
 
 </div>
