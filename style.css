@@ -1,0 +1,202 @@
+/* Layout and styling adapted from pd-perry.github.io; entry lists follow toruowo.github.io. */
+:root {
+  color-scheme: light;
+  --bg: #ffffff;
+  --text: #000000;
+  --text-muted: #525252;
+  --text-faint: #868686;
+  --accent: #c2571a;
+  --border: #e5e5e5;
+  --border-strong: #cfcfcf;
+  --sans: 'Geist', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --radius: 2px;
+  --max-width: 880px;
+  --year-width: 96px;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  line-height: 1.55;
+  font-size: 15px;
+  letter-spacing: 0.003em;
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 4rem 1.5rem 3rem;
+}
+
+/* Hero */
+.hero {
+  display: flex;
+  gap: 2.5rem;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 2.5rem;
+}
+
+.hero-text {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.hero-text h1 {
+  font-size: 42px;
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  margin: 0 0 0.5rem;
+}
+
+.tagline {
+  margin: 0 0 1rem;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.intro {
+  font-size: 15px;
+  line-height: 22px;
+  max-width: 60ch;
+  margin: 0 0 1.25rem;
+  text-align: justify;
+}
+.intro a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+}
+.intro a:hover { text-decoration: underline; }
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.9rem;
+}
+
+.hero-photo {
+  flex: 0 0 auto;
+}
+
+.hero-photo img {
+  width: 220px;
+  height: 220px;
+  object-fit: cover;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  display: block;
+}
+
+.links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 0 12px;
+  border: 1px solid var(--border);
+  border-right-width: 2px;
+  border-bottom-width: 2px;
+  border-radius: var(--radius);
+  color: var(--text);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+}
+.links a:hover { color: var(--accent); border-color: var(--border-strong); }
+
+/* Sections */
+section { margin-bottom: 3rem; }
+
+h1, h2, h3 { font-weight: 500; }
+
+h2 {
+  font-size: 24px;
+  line-height: 32px;
+  letter-spacing: -0.017em;
+  margin: 0 0 0.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border-strong);
+  display: block;
+}
+
+p { margin: 0 0 1rem; }
+
+/* Education and publications: year column + details */
+.entry-list {
+  display: grid;
+  gap: 18px;
+  padding-top: 1.25rem;
+}
+
+.entry {
+  display: grid;
+  grid-template-columns: var(--year-width) minmax(0, 1fr);
+  gap: 18px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--border);
+}
+.entry:last-child { padding-bottom: 0; border-bottom: 0; }
+
+.entry-year {
+  color: var(--text-muted);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  padding-top: 2px;
+}
+
+.entry-body {
+  min-width: 0;
+  text-align: justify;
+}
+
+.entry-body h3 {
+  margin: 0 0 3px;
+  font-size: 15px;
+  line-height: 1.35;
+  font-weight: 600;
+  letter-spacing: -0.003em;
+}
+.entry-body h3 a { color: var(--text); text-decoration: none; }
+.entry-body h3 a:hover { color: var(--accent); }
+
+.entry-meta { color: var(--text-muted); font-size: 13.5px; line-height: 1.5; }
+.entry-meta + .entry-meta { margin-top: 2px; }
+.entry-meta strong { font-weight: 600; }
+
+.author-me {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+/* Footer */
+footer {
+  border-top: 1px solid var(--border);
+  padding-top: 1.25rem;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-faint);
+}
+footer a { color: inherit; text-underline-offset: 3px; }
+footer a:hover { color: var(--accent); }
+
+/* Responsive */
+@media (max-width: 640px) {
+  .hero { flex-direction: column-reverse; align-items: flex-start; text-align: left; }
+  .hero-photo img { width: 140px; height: 140px; }
+  /* Justified text in a narrow column needs hyphenation to avoid wide gaps; author names stay unbroken. */
+  .intro, .entry-body h3 { hyphens: auto; }
+}
+
+@media (max-width: 560px) {
+  .entry { grid-template-columns: 1fr; gap: 5px; }
+}
