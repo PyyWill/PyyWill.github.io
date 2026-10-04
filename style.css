@@ -557,7 +557,8 @@ footer .credit-own { color: var(--muted); }  /* the doodles are the one part not
 /* Motion, besides hover feedback and the doodles, is kept to three things: publications (and, on the misc page,
    paintings) rise in one by one, the experience timeline runs to the right, and the skater rides along its rule.
    Everything else is simply there. The inline script sets .in (and a 90ms stagger, --delay) as each enters the
-   viewport. Screen only (printing shows everything), with JS support (.js), and only if the reader allows motion. */
+   viewport; the timeline and the skater play once per visit (.seen-timeline, .seen-skater: already in place).
+   Screen only (printing shows everything), with JS support (.js), and only if the reader allows motion. */
 @media screen and (prefers-reduced-motion: no-preference) {
   .js :is(#publications .entry, .painting) {
     transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
@@ -568,22 +569,23 @@ footer .credit-own { color: var(--muted); }  /* the doodles are the one part not
     transform: translateY(10px);
   }
 
-  /* Timeline: one line runs through at a steady pace, one segment per --seg; each experience appears
-     (and its dot pops) only when the line reaches it. The line itself is never faded, only drawn.
-     The pop is an animation with backwards fill only, so it never overrides the hover transition afterwards. */
+  /* Timeline: one line runs to the right at a steady pace, one segment per --seg; each experience appears (drifting
+     the same way, never up) and its dot pops only when the line reaches it. The line itself is never faded, only
+     drawn. The pop is an animation with backwards fill only, so it never overrides the hover transition afterwards. */
   .js .timeline .xp > :not(.xp-rail) {
     transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
     transition-delay: calc(var(--delay, 0ms) + var(--i, 0) * var(--seg));
   }
-  .js .timeline:not(.in) .xp > :not(.xp-rail) { opacity: 0; transform: translateY(8px); }
+  .js:not(.seen-timeline) .timeline:not(.in) .xp > :not(.xp-rail) { opacity: 0; transform: translateX(-10px); }
   .js .timeline .xp-rail::before { transition: transform var(--seg) linear calc(var(--delay, 0ms) + var(--i, 0) * var(--seg)); }
-  .js .timeline:not(.in) .xp-rail::before { transform: scaleX(0); }
-  .js .timeline:not(.in) .xp-rail::after { transform: scale(0); }
+  .js:not(.seen-timeline) .timeline:not(.in) .xp-rail::before { transform: scaleX(0); }
+  .js:not(.seen-timeline) .timeline:not(.in) .xp-rail::after { transform: scale(0); }
   .js .timeline.in .xp-rail::after { animation: dot-pop 0.4s var(--pop) calc(var(--delay, 0ms) + var(--i, 0) * var(--seg)) backwards; }
 
-  /* The skater rides in along its rule when the title comes into view and coasts to a stop at the rule's end. */
-  .js h2:not(.in) > .doodle--skater { opacity: 0; }
-  .js h2.in > .doodle--skater { animation: ride 1.6s var(--ease) calc(var(--delay, 0ms) + 250ms) both; }
+  /* The skater rides in along its rule when the title comes into view: a push, a slowing glide, another push,
+     and a coast to a stop at the rule's end. */
+  .js:not(.seen-skater) h2:not(.in) > .doodle--skater { opacity: 0; }
+  .js h2.in > .doodle--skater { animation: ride 2.3s calc(var(--delay, 0ms) + 250ms) both; }
 
   /* Misc smileys: they drop onto the rule and stack up, bottom one first, each squashing as it lands. The entrance
      runs on the outer element and the teeter on the image, so neither restarts the other. When a face is knocked
@@ -624,10 +626,12 @@ footer .credit-own { color: var(--muted); }  /* the doodles are the one part not
   to { transform: scale(1); }
 }
 
-@keyframes ride {
-  from { opacity: 0; transform: translateX(var(--ride, -160px)); }
-  15% { opacity: 1; }
-  to { opacity: 1; transform: none; }
+@keyframes ride {  /* --ride: where it starts, left of its stop. The curves meet at the same speed, so it never jerks. */
+  0% { opacity: 0; transform: translateX(var(--ride, -160px)); animation-timing-function: cubic-bezier(0.25, 0.6, 0.55, 0.85); }  /* push off, slowing */
+  12% { opacity: 1; }
+  38% { transform: translateX(calc(var(--ride, -160px) * 0.45)); animation-timing-function: linear; }  /* glide */
+  56% { transform: translateX(calc(var(--ride, -160px) * 0.36)); animation-timing-function: cubic-bezier(0.3, 0.18, 0.25, 1); }  /* push again, coast to a stop */
+  100% { opacity: 1; transform: none; }
 }
 
 /* Responsive */

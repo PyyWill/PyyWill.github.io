@@ -9,14 +9,20 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=2026-10-04">  <!-- bump ?v= with every style.css change, so a new page never meets a cached old stylesheet -->
+<link rel="stylesheet" href="style.css?v=2026-10-04.3">  <!-- bump ?v= with every style.css change, so a new page never meets a cached old stylesheet -->
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <script>
   // Motion on scroll: flag JS support before first paint (so content stays visible without JS), then mark each
   // publication, the timeline, and the publications title (which sets the skater riding) with .in as it enters
-  // the viewport, staggered 90ms apart.
+  // the viewport, staggered 90ms apart. The timeline and the skater play once per visit: coming back to the page
+  // (from the misc page, say) they are already in place (.seen-timeline, .seen-skater).
   if ('IntersectionObserver' in window) {
-    document.documentElement.classList.add('js');
+    const root = document.documentElement;
+    const seen = (key) => { try { return sessionStorage.getItem(key) === 'played'; } catch { return false; } };
+    const remember = (key) => { try { sessionStorage.setItem(key, 'played'); } catch {} };
+    root.classList.add('js');
+    if (seen('timeline')) root.classList.add('seen-timeline');
+    if (seen('skater')) root.classList.add('seen-skater');
     addEventListener('DOMContentLoaded', () => {
       const io = new IntersectionObserver((entries) => {
         let n = 0;
@@ -24,10 +30,15 @@
           if (!e.isIntersecting) continue;
           e.target.style.setProperty('--delay', Math.min(n++, 8) * 90 + 'ms');
           e.target.classList.add('in');
+          if (e.target.matches('.timeline')) remember('timeline');
+          if (e.target.matches('#publications h2')) remember('skater');
           io.unobserve(e.target);
         }
       }, { threshold: 0.2 });
-      document.querySelectorAll('#publications h2, #publications .entry, .timeline').forEach((el) => io.observe(el));
+      const targets = ['#publications .entry'];
+      if (!seen('timeline')) targets.push('.timeline');
+      if (!seen('skater')) targets.push('#publications h2');
+      document.querySelectorAll(targets.join(', ')).forEach((el) => io.observe(el));
     });
   }
 </script>
