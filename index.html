@@ -9,11 +9,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=2026-10-04">  <!-- bump ?v= with every style.css change, so a new page never meets a cached old stylesheet -->
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <script>
-  // Reveal on scroll: flag JS support before first paint (so content stays visible without JS),
-  // then fade each block below the first screen in once as it enters the viewport, staggered 90ms apart.
+  // Motion on scroll: flag JS support before first paint (so content stays visible without JS), then mark each
+  // publication, the timeline, and the publications title (which sets the skater riding) with .in as it enters
+  // the viewport, staggered 90ms apart.
   if ('IntersectionObserver' in window) {
     document.documentElement.classList.add('js');
     addEventListener('DOMContentLoaded', () => {
@@ -26,7 +27,7 @@
           io.unobserve(e.target);
         }
       }, { threshold: 0.2 });
-      document.querySelectorAll('h2, .entry, .timeline, footer').forEach((el) => io.observe(el));
+      document.querySelectorAll('#publications h2, #publications .entry, .timeline').forEach((el) => io.observe(el));
     });
   }
 </script>

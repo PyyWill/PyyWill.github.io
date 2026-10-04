@@ -554,19 +554,19 @@ footer a {
 footer a:hover { color: var(--ink); text-decoration-color: var(--ink); }
 footer .credit-own { color: var(--muted); }  /* the doodles are the one part not adapted from anyone */
 
-/* Motion: each block rises in once as it enters the viewport, 90ms apart (the inline script sets .in and --delay).
-   Screen only (printing shows everything), with JS support (.js), and only if the reader allows motion. */
+/* Motion, besides hover feedback and the doodles, is kept to three things: publications (and, on the misc page,
+   paintings) rise in one by one, the experience timeline runs to the right, and the skater rides along its rule.
+   Everything else is simply there. The inline script sets .in (and a 90ms stagger, --delay) as each enters the
+   viewport. Screen only (printing shows everything), with JS support (.js), and only if the reader allows motion. */
 @media screen and (prefers-reduced-motion: no-preference) {
-  .js :is(h2, .entry, .painting, footer) {  /* the first screen (name, bio, photo) is simply there from the start */
+  .js :is(#publications .entry, .painting) {
     transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
     transition-delay: var(--delay, 0ms);
   }
-  .js :is(h2, .entry, .painting, footer):not(.in) {
+  .js :is(#publications .entry, .painting):not(.in) {
     opacity: 0;
     transform: translateY(10px);
   }
-  .js h2::after { transition: transform 1.2s var(--ease) var(--delay, 0ms); }
-  .js h2:not(.in)::after { transform: scaleX(0); }
 
   /* Timeline: one line runs through at a steady pace, one segment per --seg; each experience appears
      (and its dot pops) only when the line reaches it. The line itself is never faded, only drawn.
@@ -581,15 +581,15 @@ footer .credit-own { color: var(--muted); }  /* the doodles are the one part not
   .js .timeline:not(.in) .xp-rail::after { transform: scale(0); }
   .js .timeline.in .xp-rail::after { animation: dot-pop 0.4s var(--pop) calc(var(--delay, 0ms) + var(--i, 0) * var(--seg)) backwards; }
 
-  /* The skater rides in along the rule while it is drawn and coasts to a stop at its end. */
+  /* The skater rides in along its rule when the title comes into view and coasts to a stop at the rule's end. */
   .js h2:not(.in) > .doodle--skater { opacity: 0; }
   .js h2.in > .doodle--skater { animation: ride 1.6s var(--ease) calc(var(--delay, 0ms) + 250ms) both; }
 
-  /* Misc smileys: once the rule is drawn they drop onto it and stack up, bottom one first, each squashing as it
-     lands. The entrance runs on the outer element and the teeter on the image, so neither restarts the other.
-     When a face is knocked off, the ones still standing teeter (the script sets .is-shaken and each face's --amp). */
+  /* Misc smileys: they drop onto the rule and stack up, bottom one first, each squashing as it lands. The entrance
+     runs on the outer element and the teeter on the image, so neither restarts the other. When a face is knocked
+     off, the ones still standing teeter (the script sets .is-shaken and each face's --amp). */
   .js h2:not(.in) .smiley { opacity: 0; }
-  .js h2.in .smiley { animation: drop-stack 0.8s calc(var(--delay, 0ms) + 800ms + var(--n) * 230ms) backwards; }
+  .js h2.in .smiley { animation: drop-stack 0.8s calc(var(--delay, 0ms) + 300ms + var(--n) * 230ms) backwards; }
   .smiley-stack.is-shaken .smiley:not(.is-down) img { animation: teeter 0.9s ease-in-out; }
 
   .viewer[open] .viewer-figure { animation: viewer-in 0.45s var(--ease); }

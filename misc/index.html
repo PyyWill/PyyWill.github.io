@@ -9,11 +9,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../style.css?v=2026-10-04">  <!-- same version as the homepage's link -->
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <script>
-  // Reveal on scroll, as on the homepage: flag JS support before first paint, then fade each block in once
-  // as it enters the viewport, staggered 90ms apart.
+  // Motion on scroll, as on the homepage: flag JS support before first paint, then mark each painting, and the
+  // title (which sets the smileys dropping), with .in as it enters the viewport, staggered 90ms apart.
   if ('IntersectionObserver' in window) {
     document.documentElement.classList.add('js');
     addEventListener('DOMContentLoaded', () => {
@@ -26,7 +26,7 @@
           io.unobserve(e.target);
         }
       }, { threshold: 0.2 });
-      document.querySelectorAll('h2, .painting, footer').forEach((el) => io.observe(el));
+      document.querySelectorAll('h2, .painting').forEach((el) => io.observe(el));
     });
   }
 </script>

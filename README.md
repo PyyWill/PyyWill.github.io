@@ -8,7 +8,7 @@ A plain static site with no build step. Layout adapted from [Perry Dong's homepa
 
 - `index.html`: all content (bio, links, education, publications) and a small inline reveal-on-scroll script
 - `misc/index.html`: the misc page (paintings), linked from under the homepage photo; its inline script also runs the full-size painting viewer
-- `style.css`: styles for both pages
+- `style.css`: styles for both pages; both link it as `style.css?v=<date>`, so bump that date with every change to it (GitHub Pages lets browsers cache files for 10 minutes, and a new page with an old stylesheet can hide content)
 - `assets/visits.js`: the visitor count in the footer, from [GoatCounter](https://www.goatcounter.com) (site code `yiyuanp`; visitor locations are in its dashboard)
 - `assets/`: profile photo, favicon, CV (`Yiyuan_Pan_CV.pdf`), hand-drawn doodles (`assets/doodles/`), paintings as WebP at 840 and 1640 px wide (`assets/paintings/`), and experience logos (`assets/logos/`)
 
