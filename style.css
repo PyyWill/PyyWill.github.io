@@ -363,6 +363,7 @@ p { margin: 0 0 1rem; }
   transform: rotate(var(--r, 0deg));
   user-select: none;
 }
+.doodle-field .lg-hide { display: none; }  /* phones only (and .sm-hide: wide screens only) */
 
 .doodle {
   display: block;
@@ -645,6 +646,7 @@ footer .credit-own { color: var(--muted); }  /* the doodles are the one part not
     opacity: calc(var(--o, 0.055) * 0.75);  /* fainter where it sits behind text */
   }
   .doodle-field .sm-hide { display: none; }
+  .doodle-field .lg-hide { display: block; }
   /* Justified text in a narrow column needs hyphenation to avoid wide gaps; author names stay unbroken. */
   .intro, .entry-body h3 { hyphens: auto; }
 }
