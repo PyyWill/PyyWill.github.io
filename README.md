@@ -7,8 +7,9 @@ A plain static site with no build step. Layout adapted from [Perry Dong's homepa
 ## Files
 
 - `index.html`: all content (bio, links, education, publications) and a small inline reveal-on-scroll script
-- `style.css`: styles
-- `assets/`: profile photo, favicon, hand-drawn doodles (`assets/doodles/`), and experience logos (`assets/logos/`)
+- `misc/index.html`: the misc page (paintings), linked from under the homepage photo; its inline script also runs the full-size painting viewer
+- `style.css`: styles for both pages
+- `assets/`: profile photo, favicon, resume (`Yiyuan_Pan_CV.pdf`, linked as Resume), hand-drawn doodles (`assets/doodles/`), paintings as WebP at 840 and 1640 px wide (`assets/paintings/`), and experience logos (`assets/logos/`)
 
 ## Local preview
 

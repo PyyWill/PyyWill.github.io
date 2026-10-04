@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Misc · Yiyuan Pan</title>
+<meta name="description" content="Paintings by Yiyuan Pan.">
+<meta name="theme-color" content="#F0EFEB">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<script>
+  // Reveal on scroll, as on the homepage: flag JS support before first paint, then fade each block in once
+  // as it enters the viewport, staggered 90ms apart.
+  if ('IntersectionObserver' in window) {
+    document.documentElement.classList.add('js');
+    addEventListener('DOMContentLoaded', () => {
+      const io = new IntersectionObserver((entries) => {
+        let n = 0;
+        for (const e of entries) {
+          if (!e.isIntersecting) continue;
+          e.target.style.setProperty('--delay', Math.min(n++, 8) * 90 + 'ms');
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      }, { threshold: 0.2 });
+      document.querySelectorAll('.back-link, h2, .painting, footer').forEach((el) => io.observe(el));
+    });
+  }
+</script>
+</head>
+<body>
+
+<!-- The homepage's background doodles, same drawings and placement. -->
+<div class="doodle-field" aria-hidden="true">
+  <img src="../assets/doodles/head.svg" alt="" class="sm-hide" style="--top: 330px; --x: 420px; --w: 300px; --r: 9deg">
+  <img src="../assets/doodles/leap.svg" alt="" class="sm-hide" loading="lazy" style="--top: 32%; --x: -735px; --w: 290px; --r: 7deg">
+  <img src="../assets/doodles/profile.svg" alt="" loading="lazy" style="--top: 54%; --x: -700px; --w: 220px; --r: -12deg; --x-sm: -255px; --w-sm: 190px; --top-sm: 55%">
+  <img src="../assets/doodles/celebrate.svg" alt="" loading="lazy" style="--top: 83%; --x: 455px; --w: 170px; --r: 10deg; --o: .065; --x-sm: 115px; --w-sm: 130px; --top-sm: 86%">
+</div>
+
+<div class="wrap wrap--misc">
+
+  <a class="back-link" href="../"><span class="back-link-arrow" aria-hidden="true">←</span>Yiyuan Pan</a>
+
+  <main>
+
+    <section id="paintings">
+      <!-- Three smileys stand at the right end of the title's rule. They drop in once the rule is drawn; each can be
+           knocked once, and whatever loses its footing falls (off the end of the rule, out of the page). -->
+      <h2>A Few Paintings<span class="smiley-stack" aria-hidden="true">
+        <span class="smiley smiley--1"><img src="../assets/doodles/smiley-1.svg" alt=""></span>
+        <span class="smiley smiley--2"><img src="../assets/doodles/smiley-2.svg" alt=""></span>
+        <span class="smiley smiley--3"><img src="../assets/doodles/smiley-3.svg" alt=""></span>
+      </span></h2>
+      <div class="paintings">
+
+        <figure class="painting">
+          <a class="painting-frame" href="../assets/paintings/man-in-red-1640.webp">
+            <img src="../assets/paintings/man-in-red-840.webp"
+                 srcset="../assets/paintings/man-in-red-840.webp 840w, ../assets/paintings/man-in-red-1640.webp 1640w"
+                 sizes="(max-width: 560px) calc(100vw - 3rem), 396px" width="840" height="1209" loading="lazy" decoding="async"
+                 alt="A man in a red cap and a red, flatly cut shirt looks over his shoulder against a dark ground, a gray sack in his hand.">
+          </a>
+          <figcaption><span class="painting-title">Man in RED</span><span class="painting-year">2025</span></figcaption>
+        </figure>
+
+        <figure class="painting">
+          <a class="painting-frame" href="../assets/paintings/the-king-betrayed-1640.webp">
+            <img src="../assets/paintings/the-king-betrayed-840.webp"
+                 srcset="../assets/paintings/the-king-betrayed-840.webp 840w, ../assets/paintings/the-king-betrayed-1640.webp 1640w"
+                 sizes="(max-width: 560px) calc(100vw - 3rem), 396px" width="840" height="1209" loading="lazy" decoding="async"
+                 alt="A figure in a red robe and a gold jester's crown kneels in the dark, long blades closing in on him from both sides.">
+          </a>
+          <figcaption><span class="painting-title">The King Betrayed</span><span class="painting-year">2024</span></figcaption>
+        </figure>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>© 2026 Yiyuan Pan · <span class="credit-own">Paintings and doodles by me</span> · Layout adapted from <a href="https://pd-perry.github.io" target="_blank" rel="noopener noreferrer">Perry Dong</a></p>
+    <img class="doodle doodle--sticker" src="../assets/doodles/sticker.svg" alt="" width="44" height="46" loading="lazy" decoding="async">
+  </footer>
+
+</div>
+
+<!-- Full-size viewer. Without JS (or <dialog>), each painting link simply opens the image. -->
+<dialog class="viewer" aria-label="Painting, full size">
+  <button class="viewer-close" type="button">Close</button>
+  <figure class="viewer-figure">
+    <img class="viewer-img" src="data:," alt="">
+    <figcaption><span class="painting-title"></span><span class="painting-year"></span></figcaption>
+  </figure>
+</dialog>
+
+<script>
+  // Open a painting full size. A click anywhere, Close, or Esc dismisses it; the arrow keys step through.
+  const viewer = document.querySelector('.viewer');
+  const frames = [...document.querySelectorAll('.painting-frame')];
+  let current = 0;
+  const show = (i) => {
+    current = (i + frames.length) % frames.length;
+    const frame = frames[current], caption = frame.closest('figure');
+    const img = viewer.querySelector('.viewer-img');
+    img.src = frame.href;
+    img.alt = frame.querySelector('img').alt;
+    for (const part of ['.painting-title', '.painting-year']) {
+      viewer.querySelector(part).textContent = caption.querySelector(part).textContent;
+    }
+  };
+  if (viewer.showModal) {
+    frames.forEach((frame, i) => frame.addEventListener('click', (e) => {
+      e.preventDefault();
+      show(i);
+      viewer.showModal();
+    }));
+    viewer.addEventListener('click', () => viewer.close());
+    viewer.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') show(current + 1);
+      if (e.key === 'ArrowLeft') show(current - 1);
+    });
+  }
+
+  // The paintings stay black and white until first hovered (or focused, or tapped); after that the color stays.
+  for (const frame of frames) {
+    const develop = () => frame.classList.add('is-colored');
+    frame.addEventListener('pointerenter', develop, { once: true });
+    frame.addEventListener('focus', develop, { once: true });
+  }
+</script>
+
+<script>
+  // The smiley stack, with physics. Each face takes one knock (a hover or a tap): it is pushed away from where it was
+  // touched, and every face stacked above it loses its footing too. Loose faces fall, bounce, and roll along the rule;
+  // off its right end they drop past the paintings and out of the page. Nothing resets until the page is reloaded.
+  // A small rigid-body simulation: each face is a disc under gravity, with restitution and friction at every contact,
+  // so it spins as it rolls. Faces still stacked stay put; the scene is the title's letters, the rule, and the two
+  // paintings, as solid boxes. Coordinates are the stack's own, in px, y down; angular velocity is positive clockwise.
+  (() => {
+    const stack = document.querySelector('.smiley-stack');
+    if (!stack || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const title = stack.parentElement;
+    const G = 2600;        // gravity, px/s²
+    const BOUNCE = 0.3;    // restitution
+    const GRIP = 0.6;      // friction coefficient
+    const ROLL = 3.2;      // rolling resistance while a face has footing, 1/s
+    const PUSH = 100;      // speed of a knock, px/s
+    const STEP = 1 / 240;  // physics step, s
+    const faces = [...stack.querySelectorAll('.smiley')].map((el) => ({ el, loose: false, knocked: false, gone: false }));  // top to bottom
+    let boxes = [], pageBottom = 0;
+    let acc = 0, last = 0, running = false;
+
+    // A face's disc, from its place in the stack (measured when first needed, once the drawings have loaded).
+    const place = (f) => {
+      if (f.r) return;
+      f.r = Math.min(f.el.offsetWidth, f.el.offsetHeight) / 2;
+      f.x = f.hx = f.el.offsetLeft + f.el.offsetWidth / 2;
+      f.y = f.hy = f.el.offsetTop + f.el.offsetHeight / 2;
+      Object.assign(f, { I: 0.5 * f.r * f.r, vx: 0, vy: 0, a: 0, w: 0, rest: 0, footing: false });
+    };
+
+    // The scene: the title's letters, the rule (the title's bottom pixel), and the paintings; and the page's bottom.
+    const measure = () => {
+      const box = stack.getBoundingClientRect();
+      const local = (r) => ({ left: r.left - box.left, right: r.right - box.left, top: r.top - box.top, bottom: r.bottom - box.top });
+      const text = document.createRange();
+      text.selectNodeContents(title.firstChild);
+      const rule = local(title.getBoundingClientRect());
+      boxes = [local(text.getBoundingClientRect()), { ...rule, top: rule.bottom - 1 },
+        ...[...document.querySelectorAll('.painting-frame')].map((a) => local(a.getBoundingClientRect()))];
+      pageBottom = stack.closest('.wrap').getBoundingClientRect().bottom - box.top;
+    };
+
+    // Resolve one contact: push b out along the unit normal (nx, ny), which points into b; then apply a normal
+    // impulse (bouncing only on real impacts) and a friction impulse capped by GRIP, which is what spins a face.
+    // o is another loose face, or null for anything fixed (a box, or a face still stacked).
+    const contact = (b, nx, ny, depth, o) => {
+      if (ny < -0.6) b.footing = true;
+      if (o && ny > 0.6) o.footing = true;
+      const share = o ? 0.5 : 1;
+      b.x += nx * depth * share; b.y += ny * depth * share;
+      if (o) { o.x -= nx * depth * share; o.y -= ny * depth * share; o.rest = b.rest = 0; }  // a knock wakes both
+      const px = -nx * b.r, py = -ny * b.r;               // contact point, from b's centre
+      const qx = o ? nx * o.r : 0, qy = o ? ny * o.r : 0; // and from o's
+      const rel = () => [
+        b.vx - b.w * py - (o ? o.vx - o.w * qy : 0),
+        b.vy + b.w * px - (o ? o.vy + o.w * qx : 0)];
+      let [vx, vy] = rel();
+      const vn = vx * nx + vy * ny;
+      if (vn >= 0) return;
+      const invMass = o ? 2 : 1;
+      const jn = -(1 + (vn < -40 ? BOUNCE : 0)) * vn / invMass;
+      b.vx += nx * jn; b.vy += ny * jn;
+      if (o) { o.vx -= nx * jn; o.vy -= ny * jn; }
+      [vx, vy] = rel();
+      const tx = -ny, ty = nx;
+      const armB = px * ty - py * tx, armO = o ? qx * ty - qy * tx : 0;
+      const k = invMass + armB * armB / b.I + (o ? armO * armO / o.I : 0);
+      const jt = Math.max(-GRIP * jn, Math.min(GRIP * jn, -(vx * tx + vy * ty) / k));
+      b.vx += tx * jt; b.vy += ty * jt; b.w += armB * jt / b.I;
+      if (o) { o.vx -= tx * jt; o.vy -= ty * jt; o.w -= armO * jt / o.I; }
+    };
+
+    const step = (dt) => {
+      const moving = faces.filter((f) => f.loose && !f.gone), fixed = faces.filter((f) => !f.loose);
+      for (const b of moving) {
+        b.footing = false;
+        if (b.rest > 0.4) continue;  // asleep
+        b.vy += G * dt;
+        b.x += b.vx * dt; b.y += b.vy * dt; b.a += b.w * dt;
+      }
+      moving.forEach((b, i) => {
+        if (b.y - b.r > pageBottom) { b.gone = true; b.el.style.display = 'none'; return; }  // fell out of the page
+        for (const s of boxes) {  // the nearest point of a box: a side, its top, or a corner
+          const dx = b.x - Math.max(s.left, Math.min(b.x, s.right)), dy = b.y - Math.max(s.top, Math.min(b.y, s.bottom));
+          const d = Math.hypot(dx, dy);
+          if (d > 0 && d < b.r) contact(b, dx / d, dy / d, b.r - d, null);
+        }
+        for (const o of [...fixed, ...moving.slice(i + 1)]) {
+          if (o.gone) continue;
+          const dx = b.x - o.x, dy = b.y - o.y, d = Math.hypot(dx, dy);
+          if (d > 0 && d < b.r + o.r) contact(b, dx / d, dy / d, b.r + o.r - d, o.loose ? o : null);
+        }
+      });
+      for (const b of moving) {  // with footing: rolling resistance, and count how long it has been nearly still
+        if (b.gone || b.rest > 0.4) continue;  // asleep until something knocks into it
+        if (!b.footing) { b.rest = 0; continue; }
+        const k = Math.exp(-ROLL * dt);
+        b.vx *= k; b.w *= k;
+        const slow = Math.abs(b.vx) < 4 && Math.abs(b.vy) < 4 && Math.abs(b.w) < 0.08;
+        b.rest = slow ? b.rest + dt : 0;
+        if (b.rest > 0.4) b.vx = b.vy = b.w = 0;
+      }
+    };
+
+    const frame = (t) => {
+      acc += Math.min(0.05, Math.max(0, (t - last) / 1000));
+      last = t;
+      for (; acc >= STEP; acc -= STEP) step(STEP);
+      for (const f of faces) {
+        if (f.loose && !f.gone) f.el.style.transform = `translate(${f.x - f.hx}px, ${f.y - f.hy}px) rotate(${f.a}rad)`;
+      }
+      running = faces.some((f) => f.loose && !f.gone && f.rest <= 0.4);
+      if (running) requestAnimationFrame(frame);
+    };
+
+    // The faces still stacked teeter: the top one rocks, the bottom one stays put (unless it stands alone).
+    const shake = () => {
+      const up = faces.filter((f) => !f.loose);
+      if (!up.length) return;
+      up.forEach((f, i) => f.el.style.setProperty('--amp', (i > 0 && i === up.length - 1 ? 0 : 4) + 'deg'));
+      stack.classList.remove('is-shaken');
+      void stack.offsetWidth;  // restart the animation
+      stack.classList.add('is-shaken');
+    };
+
+    const knock = (f, dir) => {
+      faces.forEach(place);
+      measure();
+      f.knocked = true;
+      for (const g of faces.slice(0, faces.indexOf(f) + 1)) {  // the knocked face, and every face stacked above it
+        if (g.loose) continue;
+        g.loose = true;
+        g.el.classList.add('is-down');
+        g.el.style.transformOrigin = '50% 50%';
+      }
+      f.vx = dir * PUSH; f.w = f.vx / f.r; f.rest = 0;
+      shake();
+      if (!running) { running = true; last = performance.now(); requestAnimationFrame(frame); }
+    };
+
+    for (const f of faces) {
+      f.el.addEventListener('pointerenter', (e) => {
+        if (f.knocked || f.gone) return;  // each face takes one knock
+        if (stack.getAnimations({ subtree: true }).some((a) => a.animationName === 'drop-stack')) return;  // still landing
+        const r = f.el.getBoundingClientRect();
+        knock(f, e.clientX < r.left + r.width / 2 ? 1 : -1);  // pushed away from where it was touched
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>

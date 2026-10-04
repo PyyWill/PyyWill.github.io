@@ -393,6 +393,142 @@ h2:has(> .doodle) { padding-right: 88px; }  /* long titles wrap before they reac
   transform: rotate(-12deg);
 }
 
+/* The way into the misc page: a caption-sized link at the bottom right of the homepage photo, flush with its edge. */
+.misc-link {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6em;
+  width: fit-content;
+  margin: 12px 0 0 auto;
+  color: var(--ink);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+.misc-link-arrow { transition: transform 0.3s var(--ease); }
+.misc-link:hover .misc-link-arrow { transform: translateX(3px); }
+
+/* Misc page: the homepage's frame, with paintings in place of the academic sections. Its doodles are
+   part of the page, each moving the way its drawing suggests. */
+.wrap--misc { padding-top: 4.5rem; overflow-y: clip; }  /* a smiley that falls out of the page never lengthens it */
+
+.back-link {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5em;
+  width: fit-content;
+  margin-bottom: 2.5rem;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 0.3s var(--ease);
+}
+.back-link-arrow { transition: transform 0.3s var(--ease); }
+.back-link:hover { color: var(--ink); }
+.back-link:hover .back-link-arrow { transform: translateX(-3px); }
+
+/* Three smileys stacked as drawn (each face's box in the original drawing), standing at the right end of the title's
+   rule. Each takes one knock; the page's script simulates what falls, and fallen faces stay down. */
+.smiley-stack {
+  position: absolute;
+  right: 0;
+  bottom: 1px;  /* standing on the rule, at its right end */
+  width: 30px;
+  aspect-ratio: 430 / 1311;
+}
+.smiley { --amp: 0deg; position: absolute; display: block; transform-origin: 50% 100%; }
+.smiley img { display: block; width: 100%; height: auto; transform-origin: 50% 100%; user-select: none; -webkit-user-drag: none; }
+.smiley--1 { --n: 2; top: 0; left: 0.7%; width: 99.3%; }
+.smiley--2 { --n: 1; top: 34.48%; left: 0; width: 100%; }
+.smiley--3 { --n: 0; top: 69.18%; left: 3.26%; width: 94.88%; }
+
+/* Paintings: two prints side by side, black and white until first hovered (the script keeps the color). */
+.paintings {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 40px;
+  align-items: start;
+  padding-top: 1.75rem;
+}
+.painting { margin: 0; }
+.painting-frame {
+  display: block;
+  overflow: hidden;
+  border-radius: 3px;
+  background: var(--ink);  /* holds the space in the paintings' own dark while they load */
+  cursor: zoom-in;
+}
+.painting-frame img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: grayscale(1);
+  transition: transform 0.8s var(--ease), filter 1.4s var(--ease);
+}
+.painting-frame:hover img { transform: scale(1.025); }
+.painting-frame:is(:hover, :focus-visible, .is-colored) img { filter: none; }
+
+.painting figcaption,
+.viewer figcaption {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  margin-top: 12px;
+}
+.painting-title { color: var(--ink); font-size: 14px; font-weight: 600; letter-spacing: -0.01em; }
+.painting-year { color: var(--muted); font-size: 12px; font-weight: 500; font-variant-numeric: tabular-nums; }
+
+
+/* Full-size viewer for a painting, on the page's own paper. */
+.viewer {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  cursor: zoom-out;
+}
+.viewer[open] { display: grid; place-items: center; }
+.viewer::backdrop { background: var(--paper); }
+.viewer-figure { width: fit-content; margin: 0; }
+.viewer-img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: calc(100vw - 3rem);
+  max-height: calc(100vh - 8rem);
+  max-height: calc(100dvh - 8rem);
+  border-radius: 3px;
+}
+.viewer-close {
+  position: fixed;
+  top: 1.25rem;
+  right: 1.25rem;
+  min-height: 34px;
+  padding: 0 16px;
+  border: 1px solid var(--faint);
+  border-radius: 999px;
+  background: var(--paper);
+  color: var(--ink);
+  font: 500 13px var(--sans);
+  cursor: pointer;
+  transition: background-color 0.3s var(--ease), border-color 0.3s var(--ease), color 0.3s var(--ease);
+}
+.viewer-close:hover { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+html:has(.viewer[open]) { overflow: hidden; }
+
 /* Footer */
 footer {
   position: relative;
@@ -418,11 +554,11 @@ footer .credit-own { color: var(--muted); }  /* the doodles are the one part not
 /* Motion: each block rises in once as it enters the viewport, 90ms apart (the inline script sets .in and --delay).
    Screen only (printing shows everything), with JS support (.js), and only if the reader allows motion. */
 @media screen and (prefers-reduced-motion: no-preference) {
-  .js :is(.hero-text > *, .hero-photo, h2, .entry, footer) {
+  .js :is(.back-link, .hero-text > *, .hero-photo, h2, .entry, .painting, footer) {
     transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
     transition-delay: var(--delay, 0ms);
   }
-  .js :is(.hero-text > *, .hero-photo, h2, .entry, footer):not(.in) {
+  .js :is(.back-link, .hero-text > *, .hero-photo, h2, .entry, .painting, footer):not(.in) {
     opacity: 0;
     transform: translateY(10px);
   }
@@ -445,6 +581,39 @@ footer .credit-own { color: var(--muted); }  /* the doodles are the one part not
   /* The skater rides in along the rule while it is drawn, then pops an ollie off its end. */
   .js h2:not(.in) > .doodle--skater { opacity: 0; }
   .js h2.in > .doodle--skater { animation: ride-ollie 1.7s calc(var(--delay, 0ms) + 250ms) both; }
+
+  /* Misc smileys: once the rule is drawn they drop onto it and stack up, bottom one first, each squashing as it
+     lands. The entrance runs on the outer element and the teeter on the image, so neither restarts the other.
+     When a face is knocked off, the ones still standing teeter (the script sets .is-shaken and each face's --amp). */
+  .js h2:not(.in) .smiley { opacity: 0; }
+  .js h2.in .smiley { animation: drop-stack 0.8s calc(var(--delay, 0ms) + 800ms + var(--n) * 230ms) backwards; }
+  .smiley-stack.is-shaken .smiley:not(.is-down) img { animation: teeter 0.9s ease-in-out; }
+
+  .viewer[open] .viewer-figure { animation: viewer-in 0.45s var(--ease); }
+  .viewer[open]::backdrop { animation: fade-in 0.3s var(--ease); }
+}
+
+@keyframes drop-stack {
+  0% { opacity: 0; transform: translateY(-150px); animation-timing-function: cubic-bezier(0.55, 0, 1, 0.45); }  /* falling */
+  10% { opacity: 1; }
+  55% { transform: translateY(0) scale(1.1, 0.84); animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1); }  /* landing */
+  75% { transform: translateY(-5px) scale(0.97, 1.04); }
+  100% { opacity: 1; transform: none; }
+}
+
+@keyframes teeter {  /* --amp: how far each face rocks; the top one most, the bottom one not at all */
+  20% { transform: rotate(calc(var(--amp) * -1)); }
+  45% { transform: rotate(calc(var(--amp) * 0.75)); }
+  68% { transform: rotate(calc(var(--amp) * -0.35)); }
+  85% { transform: rotate(calc(var(--amp) * 0.12)); }
+}
+
+@keyframes viewer-in {
+  from { opacity: 0; transform: scale(0.985); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
 }
 
 @keyframes dot-pop {
@@ -465,6 +634,8 @@ footer .credit-own { color: var(--muted); }  /* the doodles are the one part not
   .hero { flex-direction: column-reverse; align-items: flex-start; gap: 2rem; margin-bottom: 4rem; }
   .hero-text h1 { font-size: 36px; }
   .hero-photo img { width: 140px; height: 140px; border-radius: 16px; }
+  .wrap--misc { padding-top: 3rem; }
+  .smiley-stack { width: 22px; }
   section { margin-bottom: 4rem; }
   .doodle--skater { --ride: -40px; --ollie: translate(2px, -12px) rotate(-12deg); }  /* short roll-in, no overhang */
   .doodle-field img {
@@ -480,6 +651,7 @@ footer .credit-own { color: var(--muted); }  /* the doodles are the one part not
 
 @media (max-width: 560px) {
   .entry { grid-template-columns: 1fr; gap: 6px; }
+  .paintings { grid-template-columns: 1fr; gap: 2.5rem; }
   .timeline { --xp-gap: 14px; }
   .xp-logo { height: 20px; }
   .xp-logo--caltech img { height: 13px; }
@@ -490,5 +662,5 @@ footer .credit-own { color: var(--muted); }  /* the doodles are the one part not
 }
 
 @media print {
-  .doodle-field { display: none; }
+  .doodle-field, .viewer { display: none; }
 }
