@@ -26,19 +26,17 @@
           io.unobserve(e.target);
         }
       }, { threshold: 0.2 });
-      document.querySelectorAll('.back-link, h2, .painting, footer').forEach((el) => io.observe(el));
+      document.querySelectorAll('h2, .painting, footer').forEach((el) => io.observe(el));
     });
   }
 </script>
 </head>
 <body>
 
-<!-- The homepage's background doodles, thinned out for this much shorter page (about one per screen): on wide
-     screens the head (top right) and the leaping figure (lower left), on phones just the profile. -->
-<div class="doodle-field" aria-hidden="true">
-  <img src="../assets/doodles/head.svg" alt="" class="sm-hide" style="--top: 330px; --x: 420px; --w: 300px; --r: 9deg">
-  <img src="../assets/doodles/leap.svg" alt="" class="sm-hide" loading="lazy" style="--top: 50%; --x: -735px; --w: 290px; --r: 7deg">
-  <img src="../assets/doodles/profile.svg" alt="" class="lg-hide" loading="lazy" style="--top: 55%; --x: -700px; --w: 220px; --r: -12deg; --x-sm: -255px; --w-sm: 190px; --top-sm: 55%">
+<!-- Two of the homepage's background doodles, one in each margin, each sized to fit its margin whole. -->
+<div class="doodle-field doodle-field--margins" aria-hidden="true">
+  <img src="../assets/doodles/leap.svg" alt="" class="doodle-field-left" style="--top: 42%; --r: 7deg">
+  <img src="../assets/doodles/head.svg" alt="" class="doodle-field-right" style="--top: 300px; --r: 9deg">
 </div>
 
 <div class="wrap wrap--misc">

@@ -13,7 +13,7 @@
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <script>
   // Reveal on scroll: flag JS support before first paint (so content stays visible without JS),
-  // then fade each block in once as it enters the viewport, staggered 90ms apart.
+  // then fade each block below the first screen in once as it enters the viewport, staggered 90ms apart.
   if ('IntersectionObserver' in window) {
     document.documentElement.classList.add('js');
     addEventListener('DOMContentLoaded', () => {
@@ -26,7 +26,7 @@
           io.unobserve(e.target);
         }
       }, { threshold: 0.2 });
-      document.querySelectorAll('.hero-text > *, .hero-photo, h2, .entry, .timeline, footer').forEach((el) => io.observe(el));
+      document.querySelectorAll('h2, .entry, .timeline, footer').forEach((el) => io.observe(el));
     });
   }
 </script>

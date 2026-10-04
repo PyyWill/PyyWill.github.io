@@ -363,7 +363,12 @@ p { margin: 0 0 1rem; }
   transform: rotate(var(--r, 0deg));
   user-select: none;
 }
-.doodle-field .lg-hide { display: none; }  /* phones only (and .sm-hide: wide screens only) */
+/* Misc page: one doodle in each margin, 24px outside the column, as wide as the margin allows (up to 240px) while
+   keeping 36px from the window's edge, so neither is ever cut off; hidden where the margins are too narrow for one. */
+.doodle-field--margins img { --w: min(240px, calc(50% - 476px)); }
+.doodle-field--margins .doodle-field-left { left: calc(50% - 440px - var(--w)); }
+.doodle-field--margins .doodle-field-right { left: calc(50% + 440px); }
+@media (max-width: 1250px) { .doodle-field--margins { display: none; } }
 
 .doodle {
   display: block;
@@ -374,15 +379,12 @@ p { margin: 0 0 1rem; }
 
 h2:has(> .doodle) { padding-right: 88px; }  /* long titles wrap before they reach the skater */
 
-/* The skater, caught mid-ollie off the end of the rule. */
+/* The skater, its wheels on the rule, stopped at the rule's end. */
 .doodle--skater {
-  --ollie: translate(14px, -14px) rotate(-14deg);
   position: absolute;
   right: 0;
   bottom: 1px;
   height: 54px;
-  transform-origin: 0 100%;  /* pivot on the tail */
-  transform: var(--ollie);
 }
 
 /* A sticker slapped across the footer rule; its paper-colored patch hides the rule behind it. */
@@ -555,11 +557,11 @@ footer .credit-own { color: var(--muted); }  /* the doodles are the one part not
 /* Motion: each block rises in once as it enters the viewport, 90ms apart (the inline script sets .in and --delay).
    Screen only (printing shows everything), with JS support (.js), and only if the reader allows motion. */
 @media screen and (prefers-reduced-motion: no-preference) {
-  .js :is(.back-link, .hero-text > *, .hero-photo, h2, .entry, .painting, footer) {
+  .js :is(h2, .entry, .painting, footer) {  /* the first screen (name, bio, photo) is simply there from the start */
     transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
     transition-delay: var(--delay, 0ms);
   }
-  .js :is(.back-link, .hero-text > *, .hero-photo, h2, .entry, .painting, footer):not(.in) {
+  .js :is(h2, .entry, .painting, footer):not(.in) {
     opacity: 0;
     transform: translateY(10px);
   }
@@ -579,9 +581,9 @@ footer .credit-own { color: var(--muted); }  /* the doodles are the one part not
   .js .timeline:not(.in) .xp-rail::after { transform: scale(0); }
   .js .timeline.in .xp-rail::after { animation: dot-pop 0.4s var(--pop) calc(var(--delay, 0ms) + var(--i, 0) * var(--seg)) backwards; }
 
-  /* The skater rides in along the rule while it is drawn, then pops an ollie off its end. */
+  /* The skater rides in along the rule while it is drawn and coasts to a stop at its end. */
   .js h2:not(.in) > .doodle--skater { opacity: 0; }
-  .js h2.in > .doodle--skater { animation: ride-ollie 1.7s calc(var(--delay, 0ms) + 250ms) both; }
+  .js h2.in > .doodle--skater { animation: ride 1.6s var(--ease) calc(var(--delay, 0ms) + 250ms) both; }
 
   /* Misc smileys: once the rule is drawn they drop onto it and stack up, bottom one first, each squashing as it
      lands. The entrance runs on the outer element and the teeter on the image, so neither restarts the other.
@@ -622,11 +624,10 @@ footer .credit-own { color: var(--muted); }  /* the doodles are the one part not
   to { transform: scale(1); }
 }
 
-@keyframes ride-ollie {
-  0% { opacity: 0; transform: translate(var(--ride, -160px), 0) rotate(0deg); animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1); }
+@keyframes ride {
+  from { opacity: 0; transform: translateX(var(--ride, -160px)); }
   15% { opacity: 1; }
-  70% { transform: translate(0, 0) rotate(0deg); animation-timing-function: cubic-bezier(0.2, 0.7, 0.3, 1.3); }
-  100% { opacity: 1; transform: var(--ollie); }
+  to { opacity: 1; transform: none; }
 }
 
 /* Responsive */
@@ -638,7 +639,7 @@ footer .credit-own { color: var(--muted); }  /* the doodles are the one part not
   .wrap--misc { padding-top: 3rem; }
   .smiley-stack { width: 22px; }
   section { margin-bottom: 4rem; }
-  .doodle--skater { --ride: -40px; --ollie: translate(2px, -12px) rotate(-12deg); }  /* short roll-in, no overhang */
+  .doodle--skater { --ride: -40px; }  /* a short roll-in */
   .doodle-field img {
     top: var(--top-sm, var(--top));
     left: calc(50% + var(--x-sm, var(--x)));
@@ -646,7 +647,6 @@ footer .credit-own { color: var(--muted); }  /* the doodles are the one part not
     opacity: calc(var(--o, 0.055) * 0.75);  /* fainter where it sits behind text */
   }
   .doodle-field .sm-hide { display: none; }
-  .doodle-field .lg-hide { display: block; }
   /* Justified text in a narrow column needs hyphenation to avoid wide gaps; author names stay unbroken. */
   .intro, .entry-body h3 { hyphens: auto; }
 }
