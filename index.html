@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=2026-10-04.3">  <!-- bump ?v= with every style.css change, so a new page never meets a cached old stylesheet -->
+<link rel="stylesheet" href="style.css?v=2026-10-04.5">  <!-- bump ?v= with every style.css change, so a new page never meets a cached old stylesheet -->
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <script>
   // Motion on scroll: flag JS support before first paint (so content stays visible without JS), then mark each
@@ -46,12 +46,13 @@
 <body>
 
 <!-- Background doodles: faint, tilted, bleeding off the page edges. Per doodle: --top (from the page top),
-     --x (offset from the page center), --w (width), --r (rotation), --o (opacity); the -sm values apply on phones. -->
+     --x (offset from the page center), --w (width), --r (rotation), --o (opacity); the -sm values apply on phones.
+     A doodle with data-beside is pinned to an entry by the script at the end of the page: its middle at the entry's
+     middle (data-at="middle") or in the gap above it (data-at="above"); its --top is then only the fallback. -->
 <div class="doodle-field" aria-hidden="true">
-  <img src="assets/doodles/head.svg" alt="" class="sm-hide" style="--top: 330px; --x: 420px; --w: 300px; --r: 9deg">
+  <img src="assets/doodles/profile.svg" alt="" width="109" height="106" data-beside="#cmu" data-at="middle" style="--top: 560px; --x: 420px; --w: 220px; --r: -12deg; --x-sm: 40px; --w-sm: 170px">
   <img src="assets/doodles/leap.svg" alt="" class="sm-hide" loading="lazy" style="--top: 32%; --x: -735px; --w: 290px; --r: 7deg">
-  <img src="assets/doodles/profile.svg" alt="" loading="lazy" style="--top: 54%; --x: -700px; --w: 220px; --r: -12deg; --x-sm: -255px; --w-sm: 190px; --top-sm: 55%">
-  <img src="assets/doodles/celebrate.svg" alt="" loading="lazy" style="--top: 83%; --x: 455px; --w: 170px; --r: 10deg; --o: .065; --x-sm: 115px; --w-sm: 130px; --top-sm: 86%">
+  <img src="assets/doodles/celebrate.svg" alt="" width="572" height="1039" data-beside="#dream-to-recall" data-at="above" style="--top: 76%; --x: 455px; --w: 170px; --r: 10deg; --o: .065; --x-sm: 115px; --w-sm: 130px">
 </div>
 
 <div class="wrap">
@@ -86,7 +87,7 @@
       <h2>Education</h2>
       <div class="entry-list">
 
-        <article class="entry">
+        <article class="entry" id="cmu">
           <div class="entry-year">2025—Present</div>
           <div class="entry-body">
             <h3>Carnegie Mellon University</h3>
@@ -209,7 +210,7 @@
           </div>
         </article>
 
-        <article class="entry">
+        <article class="entry" id="dream-to-recall">
           <div class="entry-year">2026</div>
           <div class="entry-body">
             <h3><a href="https://ieeexplore.ieee.org/abstract/document/11459135/" target="_blank" rel="noopener noreferrer">Dream to Recall: Imagination-Guided Experience Retrieval for Memory-Persistent Vision-and-Language Navigation</a></h3>
@@ -242,15 +243,32 @@
   </main>
 
   <footer>
-    <p>© 2026 Yiyuan Pan · <span class="credit-own">Doodles hand-drawn by me</span> · Layout adapted from <a href="https://pd-perry.github.io" target="_blank" rel="noopener noreferrer">Perry Dong</a><span class="visits" hidden> · <span class="visits-count"></span></span></p>
+    <p>© 2026 Yiyuan Pan · <span class="credit-own">Doodles hand-drawn by me</span> · Layout adapted from <a href="https://pd-perry.github.io" target="_blank" rel="noopener noreferrer">Perry Dong</a><span class="visits" hidden> · <a class="visits-count" target="_blank" rel="noopener noreferrer"></a></span></p>
     <img class="doodle doodle--sticker" src="assets/doodles/sticker.svg" alt="" width="44" height="46" loading="lazy" decoding="async">
   </footer>
 
 </div>
 
+<script>
+  // Pin the background doodles that have data-beside to their entry, measuring from the page top (offsets ignore
+  // the publications' rise-in transform). Again once the fonts have loaded, and whenever the window resizes.
+  (() => {
+    const pageTop = (el) => { let y = 0; for (; el; el = el.offsetParent) y += el.offsetTop; return y; };
+    const pin = () => document.querySelectorAll('.doodle-field [data-beside]').forEach((img) => {
+      const entry = document.querySelector(img.dataset.beside);
+      if (!entry) return;
+      const y = img.dataset.at === 'above' ? pageTop(entry) - 24 : pageTop(entry) + entry.offsetHeight / 2;  // 24px up: the hairline between entries
+      img.style.setProperty('--top', `${Math.round(y - img.offsetHeight / 2)}px`);
+    });
+    pin();
+    document.fonts?.ready.then(pin);
+    addEventListener('resize', pin);
+  })();
+</script>
+
 <!-- Visitor statistics: GoatCounter (no cookies); the footer shows the total, locations are in its dashboard. -->
 <script data-goatcounter="https://yiyuanp.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
-<script src="assets/visits.js?v=2026-10-04.4" defer></script>
+<script src="assets/visits.js?v=2026-10-04.5" defer></script>
 
 </body>
 </html>
