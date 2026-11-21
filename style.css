@@ -221,6 +221,7 @@ p { margin: 0 0 1rem; }
   font-weight: 600;
   letter-spacing: 0.01em;
 }
+.entry-venue strong { color: var(--ink); font-weight: 700; }  /* Oral: darker and heavier than its venue */
 
 /* Experience: a horizontal timeline. Logos rest as ink silhouettes and develop into their own colors on hover. */
 .timeline {
