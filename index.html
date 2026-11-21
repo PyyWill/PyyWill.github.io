@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=2026-11-20">  <!-- bump ?v= with every style.css change, so a new page never meets a cached old stylesheet -->
+<link rel="stylesheet" href="style.css?v=2026-11-21">  <!-- bump ?v= with every style.css change, so a new page never meets a cached old stylesheet -->
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <script>
   // Motion on scroll: flag JS support before first paint (so content stays visible without JS), then mark each
@@ -44,14 +44,6 @@
 </script>
 </head>
 <body>
-
-<!-- Background doodles: faint, tilted, bleeding off the page edges. Per doodle: --top (from the page top),
-     --x (offset from the page center), --w (width), --r (rotation), --o (opacity); the -sm values apply on phones.
-     A doodle with data-beside is pinned to an entry by the script at the end of the page: its middle at the entry's
-     middle (data-at="middle") or in the gap above it (data-at="above"); its --top is then only the fallback. -->
-<div class="doodle-field" aria-hidden="true">
-  <img src="assets/doodles/celebrate.svg" alt="" width="572" height="1039" data-beside="#dream-to-recall" data-at="above" style="--top: 76%; --x: -625px; --w: 170px; --r: -10deg; --o: .065; --x-sm: -245px; --w-sm: 130px">
-</div>
 
 <div class="wrap">
 
@@ -255,23 +247,6 @@
   </footer>
 
 </div>
-
-<script>
-  // Pin the background doodles that have data-beside to their entry, measuring from the page top (offsets ignore
-  // the publications' rise-in transform). Again once the fonts have loaded, and whenever the window resizes.
-  (() => {
-    const pageTop = (el) => { let y = 0; for (; el; el = el.offsetParent) y += el.offsetTop; return y; };
-    const pin = () => document.querySelectorAll('.doodle-field [data-beside]').forEach((img) => {
-      const entry = document.querySelector(img.dataset.beside);
-      if (!entry) return;
-      const y = img.dataset.at === 'above' ? pageTop(entry) - 24 : pageTop(entry) + entry.offsetHeight / 2;  // 24px up: the hairline between entries
-      img.style.setProperty('--top', `${Math.round(y - img.offsetHeight / 2)}px`);
-    });
-    pin();
-    document.fonts?.ready.then(pin);
-    addEventListener('resize', pin);
-  })();
-</script>
 
 <!-- Visitor statistics: GoatCounter (no cookies); the footer shows the total, locations are in its dashboard. -->
 <script data-goatcounter="https://yiyuanp.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>

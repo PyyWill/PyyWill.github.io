@@ -345,7 +345,7 @@ p { margin: 0 0 1rem; }
 .xp:is(:hover, :focus-within) .xp-rail::after { transform: scale(1.4); background-color: var(--ink); }
 .xp:is(:hover, :focus-within):not(:has(.xp-meta a:is(:hover, :focus-visible))) .xp-title { text-decoration-color: var(--ink); }
 
-/* Doodles (decorative). A faint field of margin drawings behind the page, one skater on the publications rule,
+/* Doodles (decorative). A faint field of margin drawings behind the misc page, one skater on the publications rule,
    and a sticker on the footer rule. The tilts and offsets are deliberate: loose, never lined up. */
 .doodle-field {
   position: absolute;
@@ -388,11 +388,12 @@ h2:has(> .doodle) { padding-right: 88px; }  /* long titles wrap before they reac
   height: 54px;
 }
 
-/* A sticker slapped across the footer rule; its paper-colored patch hides the rule behind it. */
+/* A sticker slapped across the footer rule at its right end, like the skater on its rule; its paper-colored patch
+   hides the rule behind it. */
 .doodle--sticker {
   position: absolute;
   top: -26px;
-  right: 20%;  /* slapped just past the credits, not squared to the edge */
+  right: 0;
   height: 46px;
   transform: rotate(-12deg);
 }
